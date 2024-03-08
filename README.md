@@ -11,7 +11,7 @@ Next.js frontend for Tucon.
 
 Install dependencies
 ```bash
-pnpm dev
+pnpm install
 ```
 
 Run the development server:
