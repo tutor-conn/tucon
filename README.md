@@ -4,7 +4,7 @@ Next.js frontend for Tucon.
 
 ## Prerequisites
 
-- [Node.js 20](https://nodejs.org/)
+- [Node.js 20 or higher](https://nodejs.org/)
 - [pnpm](https://pnpm.io/installation)
 
 ## Getting Started
