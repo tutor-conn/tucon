@@ -100,7 +100,7 @@ export default function PrivacyPolicy() {
         </TypographyP>
         <TypographyP>
           4.2 Location Information: You can control location tracking through
-          your device settings or by adjusting the website's permissions.
+          your device settings or by adjusting the website&apos;s permissions.
         </TypographyP>
         <TypographyP>
           4.3 Marketing Communications: You can opt-out of receiving marketing
@@ -116,7 +116,9 @@ export default function PrivacyPolicy() {
           100% secure, so we cannot guarantee absolute security.
         </TypographyP>
 
-        <TypographyH2 className="mt-10">6. Children's Privacy</TypographyH2>
+        <TypographyH2 className="mt-10">
+          6. Children&apos;s Privacy
+        </TypographyH2>
         <TypographyP>
           Tucon is not intended for use by children under the age of 13. We do
           not knowingly collect personal information from children under 13. If

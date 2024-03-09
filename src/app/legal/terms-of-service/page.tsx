@@ -17,11 +17,11 @@ export default function TermsOfService() {
         <TypographyLead>Effective Date: March 9, 2024</TypographyLead>
 
         <TypographyP>
-          Thank you for choosing Tucon! These Terms of Service ("Terms") govern
-          your use of our website and associated services (collectively, the
-          "Website"). By accessing or using Tucon, you agree to be bound by
-          these Terms. If you do not agree to these Terms, please do not use
-          Tucon.
+          Thank you for choosing Tucon! These Terms of Service
+          (&quot;Terms&quot;) govern your use of our website and associated
+          services (collectively, the &quot;Website&quot;). By accessing or
+          using Tucon, you agree to be bound by these Terms. If you do not agree
+          to these Terms, please do not use Tucon.
         </TypographyP>
 
         <TypographyH2 className="mt-10">1. Use of Tucon</TypographyH2>
@@ -101,9 +101,10 @@ export default function TermsOfService() {
           6. Disclaimer of Warranties
         </TypographyH2>
         <TypographyP>
-          Tucon is provided "as is" and "as available" without any warranties of
-          any kind, whether express or implied. We do not guarantee the
-          accuracy, reliability, or availability of Tucon or its content.
+          Tucon is provided &quot;as is&quot; and &quot;as available&quot;
+          without any warranties of any kind, whether express or implied. We do
+          not guarantee the accuracy, reliability, or availability of Tucon or
+          its content.
         </TypographyP>
 
         <TypographyH2 className="mt-10">
@@ -119,9 +120,9 @@ export default function TermsOfService() {
         <TypographyP>
           You agree to indemnify and hold harmless Tucon and its affiliates,
           officers, directors, employees, and agents from any claims, losses,
-          damages, liabilities, and expenses (including attorney's fees) arising
-          out of or in connection with your use of Tucon or violation of these
-          Terms.
+          damages, liabilities, and expenses (including attorney&apos;s fees)
+          arising out of or in connection with your use of Tucon or violation of
+          these Terms.
         </TypographyP>
 
         <TypographyH2 className="mt-10">9. Changes to Terms</TypographyH2>
