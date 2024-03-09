@@ -1,4 +1,7 @@
-# Tucon
+<!-- Banner Image -->
+<div align="center">
+  <img src="public/tucon-horizontal.svg" alt="Tucon Logo" />
+</div>
 
 Next.js frontend for Tucon.
 
