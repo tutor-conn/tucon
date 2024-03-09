@@ -104,7 +104,10 @@ export default function SignUp() {
             </div>
 
             <p className="text-center">
-              Already have an account? <Anchor href="/login">Sign in</Anchor>
+              Already have an account?{" "}
+              <Anchor variant="primary" href="/login">
+                Sign in
+              </Anchor>
             </p>
 
             <Button
@@ -114,6 +117,12 @@ export default function SignUp() {
             >
               Sign up
             </Button>
+
+            <p className="text-center text-gray-500 text-xs">
+              By signing up, you agree to our{" "}
+              <Anchor href="/legal/terms-of-service">terms of service</Anchor>{" "}
+              and <Anchor href="/legal/privacy-policy">privacy policy</Anchor>
+            </p>
           </div>
         </form>
       </Form>

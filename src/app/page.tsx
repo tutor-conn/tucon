@@ -1,29 +1,13 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
-        <Image
-          alt="Tucon Logo"
-          src="/tucon-horizontal.svg"
-          height={0}
-          width={0}
-          className="w-36 h-10"
-          priority
-        />
-        <span className="sr-only">Tucon</span>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Button asChild variant="secondary" size="sm">
-            <Link href="/sign-up">Sign up</Link>
-          </Button>
-          <Button asChild variant="outline" size="sm">
-            <Link href="/login">Log in</Link>
-          </Button>
-        </nav>
-      </header>
+      <SiteHeader />
       <main className="flex-1">
         <section className="w-full pt-12 md:pt-24 lg:pt-32">
           <div className="container px-4 md:px-6">
@@ -58,19 +42,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          © 2024 Tucon. All rights reserved.
-        </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
-            Terms of Service
-          </Link>
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
-            Privacy
-          </Link>
-        </nav>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

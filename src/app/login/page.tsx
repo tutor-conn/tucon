@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { AuthBox } from "@/components/auth-box";
-import Link from "next/link";
 import { Anchor } from "@/components/ui/anchor";
 
 const formSchema = z.object({
@@ -52,7 +51,7 @@ export default function Login() {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-6 p-6">
             <div className="space-y-2 text-center">
-              <h1 className="text-3xl font-bold">Login</h1>
+              <h1 className="text-3xl font-bold">Log in</h1>
             </div>
             <div className="space-y-2">
               <div className="space-y-2">
@@ -88,8 +87,12 @@ export default function Login() {
             </div>
 
             <div className="flex justify-between">
-              <Anchor href="/forgot-password">Forgot password?</Anchor>
-              <Anchor href="/sign-up">Create an account</Anchor>
+              <Anchor variant="primary" href="/forgot-password">
+                Forgot password?
+              </Anchor>
+              <Anchor variant="primary" href="/sign-up">
+                Create an account
+              </Anchor>
             </div>
 
             <Button
