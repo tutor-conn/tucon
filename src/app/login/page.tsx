@@ -14,6 +14,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { AuthBox } from "@/components/auth-box";
+import Link from "next/link";
+import { Anchor } from "@/components/ui/anchor";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -44,10 +47,10 @@ export default function Login() {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+    <AuthBox>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="w-96 rounded-lg shadow-lg bg-white p-6 space-y-6 border border-gray-200 dark:border-gray-700">
+          <div className="space-y-6 p-6">
             <div className="space-y-2 text-center">
               <h1 className="text-3xl font-bold">Login</h1>
             </div>
@@ -60,7 +63,7 @@ export default function Login() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="hi@example.com" {...field} />
+                        <Input {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -84,17 +87,21 @@ export default function Login() {
               </div>
             </div>
 
+            <div className="flex justify-between">
+              <Anchor href="/forgot-password">Forgot password?</Anchor>
+              <Anchor href="/sign-up">Create an account</Anchor>
+            </div>
+
             <Button
-              className="w-full bg-black text-white"
-              variant="outline"
+              className="w-full"
               type="submit"
               disabled={form.formState.isSubmitting}
             >
-              <div className="flex items-center justify-center">Login</div>
+              Login
             </Button>
           </div>
         </form>
       </Form>
-    </div>
+    </AuthBox>
   );
 }
