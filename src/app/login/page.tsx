@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
 
@@ -31,18 +31,13 @@ export default function Login() {
     },
   });
 
-  const { toast } = useToast();
-
   async function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
 
     // TODO: Call API
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    toast({
-      variant: "destructive",
-      title: "Not implemented!",
-    });
+    toast.error("Not implemented!");
   }
 
   return (
@@ -100,7 +95,7 @@ export default function Login() {
               type="submit"
               disabled={form.formState.isSubmitting}
             >
-              Login
+              Log in
             </Button>
           </div>
         </form>

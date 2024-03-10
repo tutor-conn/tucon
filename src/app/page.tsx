@@ -24,7 +24,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 min:[400px]:flex-row">
                   <Button size="lg" asChild>
-                    <Link href="/sign-up">View tutors</Link>
+                    <Link href="/sign-up">Find a tutor</Link>
                   </Button>
                 </div>
               </div>
@@ -32,9 +32,9 @@ export default function Home() {
                 <Image
                   alt="Hero"
                   className="aspect-video overflow-hidden rounded-xl object-cover object-center w-auto h-auto"
-                  height="310"
                   src="/landing-unsplash-h6gCRTCxM7o.jpg"
                   priority
+                  height="310"
                   width="550"
                 />
               </div>
