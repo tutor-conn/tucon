@@ -13,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
 
@@ -38,8 +37,8 @@ export default function SignUp() {
 
     // TODO: Call API
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    toast.error("Not implemented!");
+    
+    window.location.href = "/create-profile";
   }
 
   return (
