@@ -12,7 +12,6 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormAutocomplete,
 } from "@/components/ui/form";
 import { ProfileSetupBox } from "@/components/profile-setup-box";
 import { Anchor } from "@/components/ui/anchor";
@@ -60,10 +59,10 @@ export default function CreateStudent() {
     },
   });
 
-  function formatPayRate(pay: any) {
-    var min = Number(pay.valueOf()[0]);
-    var max = Number(pay.valueOf()[1]);
-    var suffix = max >= 100 ? "+" : "";
+  function formatPayRate(pay: number[]) {
+    const min = pay[0];
+    const max = pay[1];
+    const suffix = max >= 100 ? "+" : "";
     return `CAD $${min}.00 - $${max}.00` + suffix;
   }
 
@@ -142,8 +141,8 @@ export default function CreateStudent() {
                 maxValue={100}
                 minValue={0}
                 value={payRange}
-                onChange={setPayRange}
-                getValue={formatPayRate}
+                onChange={(value) => setPayRange(value as number[])}
+                getValue={(value) => formatPayRate(value as number[])}
                 className="max-w-md py-6"
               />
 
@@ -161,6 +160,7 @@ export default function CreateStudent() {
                     scrollShadowProps={{
                       isEnabled: false,
                     }}
+                    {...field}
                   >
                     {(item) => (
                       <AutocompleteItem key={item.key}>
@@ -190,12 +190,6 @@ export default function CreateStudent() {
             >
               Create Profile
             </Button>
-
-            <p className="text-center text-xs text-gray-500">
-              By creating an account, you agree to our{" "}
-              <Anchor href="/legal/terms-of-service">terms of service</Anchor>{" "}
-              and <Anchor href="/legal/privacy-policy">privacy policy</Anchor>
-            </p>
           </div>
         </form>
       </Form>
