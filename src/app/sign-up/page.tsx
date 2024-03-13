@@ -37,7 +37,7 @@ export default function SignUp() {
 
     // TODO: Call API
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     window.location.href = "/create-profile";
   }
 
@@ -108,7 +108,7 @@ export default function SignUp() {
               Sign up
             </Button>
 
-            <p className="text-center text-gray-500 text-xs">
+            <p className="text-center text-xs text-gray-500">
               By signing up, you agree to our{" "}
               <Anchor href="/legal/terms-of-service">terms of service</Anchor>{" "}
               and <Anchor href="/legal/privacy-policy">privacy policy</Anchor>

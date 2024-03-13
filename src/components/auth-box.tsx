@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function AuthBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center gap-6">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100">
       <Link href="/">
         <Image
           src="/tucon-horizontal.svg"
@@ -11,10 +11,10 @@ export function AuthBox({ children }: { children: React.ReactNode }) {
           width={0}
           height={0}
           priority
-          className="w-52 h-auto"
+          className="h-auto w-52"
         />
       </Link>
-      <div className="w-96 rounded-lg shadow-lg bg-white border border-gray-200 dark:border-gray-700">
+      <div className="w-96 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700">
         {children}
       </div>
     </div>

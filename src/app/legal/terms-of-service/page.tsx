@@ -17,7 +17,7 @@ import {
 
 export default function TermsOfService() {
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <div className="flex min-h-[100dvh] flex-col">
       <SiteHeader />
       <Page>
         <PageHeader>

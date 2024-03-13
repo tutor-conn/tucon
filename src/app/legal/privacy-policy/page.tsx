@@ -11,7 +11,7 @@ import { TypographyH2, TypographyP } from "@/components/ui/typography";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <div className="flex min-h-[100dvh] flex-col">
       <SiteHeader />
       <Page>
         <PageHeader>

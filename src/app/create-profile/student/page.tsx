@@ -20,10 +20,8 @@ import { toast } from "sonner";
 import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
 import { useState } from "react";
 
-
-
 const phoneRegex = new RegExp(
-  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 
 const formSchema = z.object({
@@ -35,12 +33,14 @@ const formSchema = z.object({
   city: z.string().min(1, "Please enter a city"),
   country: z.string().min(1, "Please enter a country"),
   gender: z.string().optional(),
-  phone: z.string().min(1, "Plese enter a phone number").regex(phoneRegex, "Invalid phone number"),
+  phone: z
+    .string()
+    .min(1, "Plese enter a phone number")
+    .regex(phoneRegex, "Invalid phone number"),
   additionalEmail: z.string().email().optional(),
   aboutMe: z.string().max(256, "Max of 256 characters.").optional(),
   // backgroundExperience: for tutor only?
 });
-
 
 export default function CreateStudent() {
   const [payRange, setPayRange] = useState([25, 50]);
@@ -56,14 +56,14 @@ export default function CreateStudent() {
       gender: "",
       phone: "",
       additionalEmail: "",
-      aboutMe: ""
+      aboutMe: "",
     },
   });
 
   function formatPayRate(pay: any) {
-    var min = Number(pay.valueOf()[0])
+    var min = Number(pay.valueOf()[0]);
     var max = Number(pay.valueOf()[1]);
-    var suffix = (max >= 100) ? "+" : "";
+    var suffix = max >= 100 ? "+" : "";
     return `CAD $${min}.00 - $${max}.00` + suffix;
   }
 
@@ -72,7 +72,7 @@ export default function CreateStudent() {
 
     // TODO: Call API
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     toast.error("Not implemented!");
   }
 
@@ -81,11 +81,16 @@ export default function CreateStudent() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4 p-6">
-            <div className="text-center mb-10">
-              <h1 className="text-3xl font-bold">Create Your Student Profile</h1>
+            <div className="mb-10 text-center">
+              <h1 className="text-3xl font-bold">
+                Create Your Student Profile
+              </h1>
             </div>
             <div className="space-y-6">
-              <div className="grid" style={{gridTemplateColumns: '1fr 1fr', gap: '15px'}}>
+              <div
+                className="grid"
+                style={{ gridTemplateColumns: "1fr 1fr", gap: "15px" }}
+              >
                 <FormField
                   control={form.control}
                   name="firstName"
@@ -99,7 +104,7 @@ export default function CreateStudent() {
                     </FormItem>
                   )}
                 />
-  
+
                 <FormField
                   control={form.control}
                   name="lastName"
@@ -113,7 +118,7 @@ export default function CreateStudent() {
                     </FormItem>
                   )}
                 />
-  
+
                 <FormField
                   control={form.control}
                   name="gender"
@@ -129,7 +134,7 @@ export default function CreateStudent() {
                 />
               </div>
 
-              <Slider 
+              <Slider
                 label="Select your preferred pay range *"
                 // name="payRange"
                 // formatOptions={{style: "currency", currency: "CAD"}}
@@ -148,13 +153,20 @@ export default function CreateStudent() {
                 render={({ field }) => (
                   <Autocomplete
                     label="City *"
-                    defaultItems={[{key: "lol", label: "lol"}, {key: "cringe", label: "cringe"}]}
+                    defaultItems={[
+                      { key: "lol", label: "lol" },
+                      { key: "cringe", label: "cringe" },
+                    ]}
                     className="max-w-xs"
                     scrollShadowProps={{
-                      isEnabled: false
+                      isEnabled: false,
                     }}
                   >
-                    {(item) => <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>}
+                    {(item) => (
+                      <AutocompleteItem key={item.key}>
+                        {item.label}
+                      </AutocompleteItem>
+                    )}
                   </Autocomplete>
                 )}
               />
@@ -167,7 +179,9 @@ export default function CreateStudent() {
               </Anchor>
             </p>
 
-            <p className="text-center text-gray-500 text-xs">* indicates a Required Field</p>
+            <p className="text-center text-xs text-gray-500">
+              * indicates a Required Field
+            </p>
 
             <Button
               className="w-full"
@@ -177,7 +191,7 @@ export default function CreateStudent() {
               Create Profile
             </Button>
 
-            <p className="text-center text-gray-500 text-xs">
+            <p className="text-center text-xs text-gray-500">
               By creating an account, you agree to our{" "}
               <Anchor href="/legal/terms-of-service">terms of service</Anchor>{" "}
               and <Anchor href="/legal/privacy-policy">privacy policy</Anchor>

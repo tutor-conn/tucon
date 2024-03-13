@@ -27,13 +27,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function EditProfile() {
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-gray-100">
+    <div className="flex min-h-[100dvh] flex-col bg-gray-100">
       <SiteHeader />
       <Page>
         <PageHeader>
           <PageTitle>Edit Profile</PageTitle>
         </PageHeader>
-        <main className="grid md:grid-cols-[1fr_300px] gap-6 items-start">
+        <main className="grid items-start gap-6 md:grid-cols-[1fr_300px]">
           <Card>
             <CardHeader>
               <CardTitle>Public Profile</CardTitle>
@@ -88,7 +88,7 @@ function PublicProfileForm() {
   });
   return (
     <Form {...form}>
-      <div className="space-y-2 max-w-md">
+      <div className="max-w-md space-y-2">
         <FormField
           control={form.control}
           name="name"
@@ -147,7 +147,7 @@ function ChangePasswordForm() {
   });
   return (
     <Form {...form}>
-      <div className="space-y-2 max-w-md">
+      <div className="max-w-md space-y-2">
         <FormField
           control={form.control}
           name="oldPassword"

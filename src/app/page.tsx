@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <div className="flex min-h-[100dvh] flex-col">
       <SiteHeader />
       <main className="flex-1">
         <section className="w-full pt-12 md:pt-24 lg:pt-32">
@@ -17,12 +17,12 @@ export default function Home() {
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
                     Find the perfect tutor
                   </h1>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                     Personalized learning at your fingertips. Get matched with a
                     tutor today.
                   </p>
                 </div>
-                <div className="flex flex-col gap-2 min:[400px]:flex-row">
+                <div className="min:[400px]:flex-row flex flex-col gap-2">
                   <Button size="lg" asChild>
                     <Link href="/sign-up">Find a tutor</Link>
                   </Button>
@@ -31,7 +31,7 @@ export default function Home() {
               <div className="flex items-center justify-center">
                 <Image
                   alt="Hero"
-                  className="aspect-video overflow-hidden rounded-xl object-cover object-center w-auto h-auto"
+                  className="aspect-video h-auto w-auto overflow-hidden rounded-xl object-cover object-center"
                   src="/landing-unsplash-h6gCRTCxM7o.jpg"
                   priority
                   height="310"

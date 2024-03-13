@@ -31,7 +31,7 @@ export function AvatarEdit(props: React.HTMLProps<HTMLDivElement>) {
   return (
     <div className="space-y-2">
       <button {...getRootProps({ className: "relative" })}>
-        <Avatar {...rest} className={cn("w-52 h-52", className)}>
+        <Avatar {...rest} className={cn("h-52 w-52", className)}>
           <AvatarImage src="/avatar.jpg" />
           <AvatarFallback />
         </Avatar>
@@ -39,10 +39,10 @@ export function AvatarEdit(props: React.HTMLProps<HTMLDivElement>) {
           asChild
           size="sm"
           variant="outline"
-          className="absolute bottom-3 left-3 pointer-events-none"
+          className="pointer-events-none absolute bottom-3 left-3"
         >
           <span>
-            <PencilIcon className="w-4 h-4" />
+            <PencilIcon className="h-4 w-4" />
             Edit
           </span>
         </Button>
