@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, "Please enter your name"),
