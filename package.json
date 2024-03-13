@@ -9,6 +9,7 @@
     "lint": "next lint",
     "prettier-check": "prettier --check src"
   },
+  "packageManager": "pnpm@8.15.4",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@nextui-org/react": "^2.2.10",
