@@ -16,7 +16,8 @@ import {
 import { ProfileSetupBox } from "@/components/profile-setup-box";
 import { Anchor } from "@/components/ui/anchor";
 import { toast } from "sonner";
-
+import { Slider } from "@nextui-org/react";
+import { useState } from "react";
 
 const phoneRegex = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -37,6 +38,8 @@ const formSchema = z.object({
 
 
 export default function CreateStudent() {
+    const [payRange, setPayRange] = useState([25, 50]);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -114,7 +117,17 @@ export default function CreateStudent() {
                     />
                   </div>
 
-                  <Slider defaultValue={[25, 75]} />
+                  <Slider 
+                    label="Select your preferred pay range"
+                    formatOptions={{style: "currency", currency: "CAD"}}
+                    step={1}
+                    maxValue={100}
+                    minValue={0}
+                    defaultValue={[25, 50]}
+                    value={payRange} 
+                    onChange={setPayRange}
+                    className="max-w-md"
+                  />
                 </div>
     
                 <p className="text-center">
