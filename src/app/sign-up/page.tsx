@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
+import { useRouter } from "next/router";
 
 const formSchema = z.object({
   name: z.string().min(1, "Please enter your name"),
@@ -23,6 +24,8 @@ const formSchema = z.object({
 });
 
 export default function SignUp() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,12 +36,11 @@ export default function SignUp() {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
+    // TODO: Call API
+
     console.log(data);
 
-    // TODO: Call API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    window.location.href = "/create-profile";
+    router.push("/create-profile");
   }
 
   return (
