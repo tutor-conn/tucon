@@ -123,7 +123,7 @@ export default function CreateStudent() {
                   name="gender"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Gender Identity</FormLabel>
+                      <FormLabel>Gender</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
