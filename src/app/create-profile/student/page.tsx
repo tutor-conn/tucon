@@ -43,7 +43,7 @@ const formSchema = z.object({
 
 
 export default function CreateStudent() {
-  const [payRange, setPayRange] = useState([25, 50]);
+  const [payRange, setPayRange] = useState<number[]>([25, 50]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,12 +60,22 @@ export default function CreateStudent() {
     },
   });
 
+
+  function onChangePay(value: number | number[]) {
+    // check if it is an array of numbers
+    if (Array.isArray(value) && value.every(item => typeof item === 'number')) {
+      setPayRange(value);
+    }
+  }
+
+
   function formatPayRate(pay: any) {
-    var min = Number(pay.valueOf()[0])
-    var max = Number(pay.valueOf()[1]);
-    var suffix = (max >= 100) ? "+" : "";
+    var min: number = Number(pay.valueOf()[0])
+    var max: number = Number(pay.valueOf()[1]);
+    var suffix: string = (max >= 100) ? "+" : "";
     return `CAD $${min}.00 - $${max}.00` + suffix;
   }
+
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
@@ -80,7 +90,7 @@ export default function CreateStudent() {
     <ProfileSetupBox>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="space-y-4 p-6">
+          <div className="space-y-4 p-6 w-500">
             <div className="text-center mb-10">
               <h1 className="text-3xl font-bold">Create Your Student Profile</h1>
             </div>
@@ -137,7 +147,7 @@ export default function CreateStudent() {
                 maxValue={100}
                 minValue={0}
                 value={payRange}
-                onChange={setPayRange}
+                onChange={onChangePay}
                 getValue={formatPayRate}
                 className="max-w-md py-6"
               />
@@ -148,8 +158,10 @@ export default function CreateStudent() {
                 render={({ field }) => (
                   <Autocomplete
                     label="City *"
+                    // TODO: add city name values to a unique file
                     defaultItems={[{key: "lol", label: "lol"}, {key: "cringe", label: "cringe"}]}
                     className="max-w-xs"
+                    allowsCustomValue={true}
                     scrollShadowProps={{
                       isEnabled: false
                     }}
