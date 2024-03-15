@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export function SiteHeader() {
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center">
+    <header className="flex h-14 items-center px-4 lg:px-6">
       <Link href="/">
         <Image
           alt="Tucon Logo"
           src="/tucon-horizontal.svg"
           height={0}
           width={0}
-          className="w-36 h-10"
+          className="h-10 w-36"
           priority
         />
       </Link>

@@ -9,7 +9,7 @@ const Page = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mx-auto px-0 sm:px-6 py-2 w-full flex-1 max-w-none sm:max-w-7xl",
+      "mx-auto w-full max-w-none flex-1 px-0 py-2 sm:max-w-7xl sm:px-6",
       className,
     )}
     {...props}
@@ -23,7 +23,7 @@ const PageHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 py-6 px-6 sm:px-0", className)}
+    className={cn("flex flex-col space-y-1.5 px-6 py-6 sm:px-0", className)}
     {...props}
   />
 ));
