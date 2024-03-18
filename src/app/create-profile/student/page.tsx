@@ -60,11 +60,10 @@ export default function CreateStudent() {
     },
   });
 
-
   function formatPayRate(pay: number[]) {
     const min = pay[0];
     const max = pay[1];
-    
+
     if (min == 0 && max >= 100) {
       return "Any Pay";
     }
@@ -76,7 +75,6 @@ export default function CreateStudent() {
     }
     return `CAD $${min}.00 - $${max}.00` + suffix;
   }
-
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
@@ -97,7 +95,7 @@ export default function CreateStudent() {
                 Create Your Student Profile
               </h1>
             </div>
-            <div className="space-y-6 w-256">
+            <div className="w-256 space-y-6">
               <div
                 className="grid"
                 style={{ gridTemplateColumns: "2fr 2fr", gap: "15px" }}
@@ -169,75 +167,75 @@ export default function CreateStudent() {
                 value={payRange}
                 onChange={(value) => setPayRange(value as number[])}
                 getValue={(value) => formatPayRate(value as number[])}
-                className="w-[70%] py-6 mx-auto block"
+                className="mx-auto block w-[70%] py-6"
               />
 
               {/* <div className="grid grid-cols-2 gap-[15px]"> */}
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <Autocomplete
-                      label="City *"
-                      labelPlacement={"outside"}
-                      placeholder="Where do you prefer to meet?"
-                      defaultItems={cities}
-                      className="w-1/2 mx-auto block pb-[25px] mt-[25px]"
-                      allowsCustomValue={true}
-                      scrollShadowProps={{
-                        isEnabled: false,
-                      }}
-                      {...field}
-                    >
-                      {(item) => (
-                        <AutocompleteItem key={item.key}>
-                          {item.label}
-                        </AutocompleteItem>
-                      )}
-                    </Autocomplete>
-                  )}
-                />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <Autocomplete
+                    label="City *"
+                    labelPlacement={"outside"}
+                    placeholder="Where do you prefer to meet?"
+                    defaultItems={cities}
+                    className="mx-auto mt-[25px] block w-1/2 pb-[25px]"
+                    allowsCustomValue={true}
+                    scrollShadowProps={{
+                      isEnabled: false,
+                    }}
+                    {...field}
+                  >
+                    {(item) => (
+                      <AutocompleteItem key={item.key}>
+                        {item.label}
+                      </AutocompleteItem>
+                    )}
+                  </Autocomplete>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="country"
-                  render={({ field }) => (
-                    <Autocomplete
-                      label="Country *"
-                      labelPlacement={"outside"}
-                      placeholder=" "
-                      defaultItems={countries}
-                      className="w-1/2 mx-auto block"
-                      allowsCustomValue={true}
-                      scrollShadowProps={{
-                        isEnabled: false,
-                      }}
-                      {...field}
-                    >
-                      {(item) => (
-                        <AutocompleteItem key={item.key}>
-                          {item.label}
-                        </AutocompleteItem>
-                      )}
-                    </Autocomplete>
-                  )}
-                />
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <Autocomplete
+                    label="Country *"
+                    labelPlacement={"outside"}
+                    placeholder=" "
+                    defaultItems={countries}
+                    className="mx-auto block w-1/2"
+                    allowsCustomValue={true}
+                    scrollShadowProps={{
+                      isEnabled: false,
+                    }}
+                    {...field}
+                  >
+                    {(item) => (
+                      <AutocompleteItem key={item.key}>
+                        {item.label}
+                      </AutocompleteItem>
+                    )}
+                  </Autocomplete>
+                )}
+              />
               {/* </div> */}
             </div>
 
-            <p className="text-center mx-auto block">
+            <p className="mx-auto block text-center">
               Not a Student?{" "}
               <Anchor variant="primary" href="/create-profile/tutor">
                 Be a Tutor Instead.
               </Anchor>
             </p>
 
-            <p className="text-center text-xs text-gray-500 mx-auto block">
+            <p className="mx-auto block text-center text-xs text-gray-500">
               * indicates a Required Field
             </p>
 
             <Button
-              className="w-3/5 mx-auto block"
+              className="mx-auto block w-3/5"
               type="submit"
               onClick={onSubmit}
               disabled={form.formState.isSubmitting}

@@ -15,23 +15,15 @@ export default function SelectProfileType() {
 
       <span className="inline-flex w-full items-center p-6">
         <Anchor href="/create-profile/student">
-          <Button
-            className="mr-3 w-40"
-            type="button"
-            // disabled if user is not signed into an account
-            // (could happen if they manually navigate to /create-profile) ?
-          >
+          <Button className="mr-3 w-40" type="button">
+            {/* disabled if user is not signed into an account (could happen if they manually navigate to /create-profile) ? */}
             Student
           </Button>
         </Anchor>
 
         <Anchor href="/create-profile/tutor">
-          <Button
-            className="w-40"
-            type="button"
-            // disabled if user is not signed into an account
-            // (could happen if they manually navigate to /create-profile) ?
-          >
+          <Button className="w-40" type="button">
+            {/* disabled if user is not signed into an account (could happen if they manually navigate to /create-profile) ? */}
             Tutor
           </Button>
         </Anchor>
