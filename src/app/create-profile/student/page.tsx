@@ -18,6 +18,7 @@ import { Anchor } from "@/components/ui/anchor";
 import { toast } from "sonner";
 import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
 import { useState } from "react";
+import { cities, countries } from "@/lib/autofill-data";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
@@ -42,7 +43,7 @@ const formSchema = z.object({
 });
 
 export default function CreateStudent() {
-  const [payRange, setPayRange] = useState<number[]>([25, 50]);
+  const [payRange, setPayRange] = useState<number[]>([15, 40]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,18 +61,19 @@ export default function CreateStudent() {
   });
 
 
-  function onChangePay(value: number | number[]) {
-    // check if it is an array of numbers
-    if (Array.isArray(value) && value.every(item => typeof item === 'number')) {
-      setPayRange(value);
-    }
-  }
-
-
   function formatPayRate(pay: number[]) {
     const min = pay[0];
     const max = pay[1];
-    const suffix = max >= 100 ? "+" : "";
+    
+    if (min == 0 && max >= 100) {
+      return "Any Pay";
+    }
+
+    const suffix = max >= 100 ? "+/hr" : "/hr";
+
+    if (min == max) {
+      return `CAD $${min}.00` + suffix;
+    }
     return `CAD $${min}.00 - $${max}.00` + suffix;
   }
 
@@ -95,10 +97,10 @@ export default function CreateStudent() {
                 Create Your Student Profile
               </h1>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-6 w-256">
               <div
                 className="grid"
-                style={{ gridTemplateColumns: "1fr 1fr", gap: "15px" }}
+                style={{ gridTemplateColumns: "2fr 2fr", gap: "15px" }}
               >
                 <FormField
                   control={form.control}
@@ -141,11 +143,25 @@ export default function CreateStudent() {
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <Slider
                 label="Select your preferred pay range *"
-                // name="payRange"
+                name="payRange"
                 // formatOptions={{style: "currency", currency: "CAD"}}
                 step={1}
                 maxValue={100}
@@ -153,50 +169,77 @@ export default function CreateStudent() {
                 value={payRange}
                 onChange={(value) => setPayRange(value as number[])}
                 getValue={(value) => formatPayRate(value as number[])}
-                className="max-w-md py-6"
+                className="w-[70%] py-6 mx-auto block"
               />
 
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <Autocomplete
-                    label="City *"
-                    defaultItems={[
-                      { key: "lol", label: "lol" },
-                      { key: "cringe", label: "cringe" },
-                    ]}
-                    className="max-w-xs"
-                    allowsCustomValue={true}
-                    scrollShadowProps={{
-                      isEnabled: false,
-                    }}
-                    {...field}
-                  >
-                    {(item) => (
-                      <AutocompleteItem key={item.key}>
-                        {item.label}
-                      </AutocompleteItem>
-                    )}
-                  </Autocomplete>
-                )}
-              />
+              {/* <div className="grid grid-cols-2 gap-[15px]"> */}
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <Autocomplete
+                      label="City *"
+                      labelPlacement={"outside"}
+                      placeholder="Where do you prefer to meet?"
+                      defaultItems={cities}
+                      className="w-1/2 mx-auto block pb-[25px] mt-[25px]"
+                      allowsCustomValue={true}
+                      scrollShadowProps={{
+                        isEnabled: false,
+                      }}
+                      {...field}
+                    >
+                      {(item) => (
+                        <AutocompleteItem key={item.key}>
+                          {item.label}
+                        </AutocompleteItem>
+                      )}
+                    </Autocomplete>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <Autocomplete
+                      label="Country *"
+                      labelPlacement={"outside"}
+                      placeholder=" "
+                      defaultItems={countries}
+                      className="w-1/2 mx-auto block"
+                      allowsCustomValue={true}
+                      scrollShadowProps={{
+                        isEnabled: false,
+                      }}
+                      {...field}
+                    >
+                      {(item) => (
+                        <AutocompleteItem key={item.key}>
+                          {item.label}
+                        </AutocompleteItem>
+                      )}
+                    </Autocomplete>
+                  )}
+                />
+              {/* </div> */}
             </div>
 
-            <p className="text-center">
+            <p className="text-center mx-auto block">
               Not a Student?{" "}
               <Anchor variant="primary" href="/create-profile/tutor">
                 Be a Tutor Instead.
               </Anchor>
             </p>
 
-            <p className="text-center text-xs text-gray-500">
+            <p className="text-center text-xs text-gray-500 mx-auto block">
               * indicates a Required Field
             </p>
 
             <Button
-              className="w-full"
+              className="w-3/5 mx-auto block"
               type="submit"
+              onClick={onSubmit}
               disabled={form.formState.isSubmitting}
             >
               Create Profile
