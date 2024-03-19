@@ -237,7 +237,7 @@ export default function CreateStudent() {
             <Button
               className="mx-auto block w-3/5"
               type="submit"
-              onClick={onSubmit}
+              // onClick={onSubmit}
               disabled={form.formState.isSubmitting}
             >
               Create Profile
