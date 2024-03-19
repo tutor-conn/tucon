@@ -14,7 +14,7 @@ export function ProfileSetupBox({ children }: { children: React.ReactNode }) {
           className="h-auto w-52"
         />
       </Link>
-      <div className="w-[700px] rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700">
+      <div className="w-full max-w-[700px] rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700">
         {children}
       </div>
     </div>

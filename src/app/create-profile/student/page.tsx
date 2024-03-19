@@ -96,10 +96,7 @@ export default function CreateStudent() {
               </h1>
             </div>
             <div className="w-256 space-y-6">
-              <div
-                className="grid"
-                style={{ gridTemplateColumns: "2fr 2fr", gap: "15px" }}
-              >
+              <div className="grid grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="firstName"
