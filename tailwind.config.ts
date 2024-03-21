@@ -95,8 +95,8 @@ const config = {
           },
           colors: {
             default: {
-              100: "hsl(var(--background))",
-              200: "hsl(var(--background))",
+              100: "white",
+              200: "white",
             },
           },
         }

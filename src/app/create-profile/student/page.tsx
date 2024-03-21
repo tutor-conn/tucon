@@ -20,9 +20,7 @@ import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
 import { useState } from "react";
 import { cities, countries } from "@/lib/autofill-data";
 
-const phoneRegex = new RegExp(
-  /(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-);
+const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Please enter your first name"),
@@ -62,30 +60,32 @@ export default function CreateStudent() {
   });
 
   function formatPhoneNumber(phone: string): string {
-    const digitsOnly = phone.replace(/\D/g, '');
+    const digitsOnly = phone.replace(/\D/g, "");
     let formattedPhone = digitsOnly;
-  
+
     // Add parentheses around the first three digits
     if (digitsOnly.length > 3) {
       formattedPhone = `(${formattedPhone.substring(0, 3)}) ${formattedPhone.substring(3)}`;
     }
-    
+
     if (digitsOnly.length > 6) {
       formattedPhone = `${formattedPhone.substring(0, 9)} - ${formattedPhone.substring(9)}`;
     }
-  
+
     return formattedPhone;
   }
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value: string = e.target ? e.target.value : "";
-    
-    if ((phoneRegex.test(value) && value.length <= 16) || value.length < phoneVal.length) {
+
+    if (
+      (phoneRegex.test(value) && value.length <= 16) ||
+      value.length < phoneVal.length
+    ) {
       const formatted = formatPhoneNumber(value);
       setPhoneVal(formatted);
     }
   }
-  
 
   function formatPayRate(pay: number[]) {
     const min = pay[0];
@@ -172,7 +172,11 @@ export default function CreateStudent() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
-                        <Input {...field} value={phoneVal} onChange={handlePhoneChange}/>
+                      <Input
+                        {...field}
+                        value={phoneVal}
+                        onChange={handlePhoneChange}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -201,9 +205,9 @@ export default function CreateStudent() {
                     labelPlacement={"outside"}
                     placeholder=" "
                     defaultItems={countries}
-                    className="mx-auto block w-1/2 mt-[25px] mb-[50px] h-10"
+                    className="mx-auto mb-[50px] mt-[25px] block h-10 w-1/2"
                     variant="bordered"
-                    classNames={{ 
+                    classNames={{
                       base: "[&>*>*>*]:border [&>*>*>*]:border-input",
                     }}
                     allowsCustomValue={true}
@@ -230,9 +234,9 @@ export default function CreateStudent() {
                     labelPlacement={"outside"}
                     placeholder="Where do you prefer to meet?"
                     defaultItems={cities}
-                    className="mx-auto block w-1/2 h-10"
+                    className="mx-auto block h-10 w-1/2"
                     variant="bordered"
-                    classNames={{ 
+                    classNames={{
                       base: "[&>*>*>*]:border [&>*>*>*]:border-input",
                     }}
                     allowsCustomValue={true}
