@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
+import { EventType, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -21,7 +21,7 @@ import { useState } from "react";
 import { cities, countries } from "@/lib/autofill-data";
 
 const phoneRegex = new RegExp(
-  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+  /(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 
 const formSchema = z.object({
@@ -44,6 +44,7 @@ const formSchema = z.object({
 
 export default function CreateStudent() {
   const [payRange, setPayRange] = useState<number[]>([15, 40]);
+  const [phoneVal, setPhoneVal] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,6 +60,32 @@ export default function CreateStudent() {
       aboutMe: "",
     },
   });
+
+  function formatPhoneNumber(phone: string): string {
+    const digitsOnly = phone.replace(/\D/g, '');
+    let formattedPhone = digitsOnly;
+  
+    // Add parentheses around the first three digits
+    if (digitsOnly.length > 3) {
+      formattedPhone = `(${formattedPhone.substring(0, 3)}) ${formattedPhone.substring(3)}`;
+    }
+    
+    if (digitsOnly.length > 6) {
+      formattedPhone = `${formattedPhone.substring(0, 9)} - ${formattedPhone.substring(9)}`;
+    }
+  
+    return formattedPhone;
+  }
+
+  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value: string = e.target ? e.target.value : "";
+    
+    if ((phoneRegex.test(value) && value.length <= 16) || value.length < phoneVal.length) {
+      const formatted = formatPhoneNumber(value);
+      setPhoneVal(formatted);
+    }
+  }
+  
 
   function formatPayRate(pay: number[]) {
     const min = pay[0];
@@ -95,7 +122,7 @@ export default function CreateStudent() {
                 Create Your Student Profile
               </h1>
             </div>
-            <div className="w-256 space-y-6">
+            <div className="w-256">
               <div className="grid grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
@@ -145,9 +172,7 @@ export default function CreateStudent() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
+                        <Input {...field} value={phoneVal} onChange={handlePhoneChange}/>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -155,7 +180,7 @@ export default function CreateStudent() {
               </div>
 
               <Slider
-                label="Select your preferred pay range *"
+                label="Preferred Tutor Pay Rate *"
                 name="payRange"
                 // formatOptions={{style: "currency", currency: "CAD"}}
                 step={1}
@@ -167,17 +192,20 @@ export default function CreateStudent() {
                 className="mx-auto block w-[70%] py-6"
               />
 
-              {/* <div className="grid grid-cols-2 gap-[15px]"> */}
               <FormField
                 control={form.control}
-                name="city"
+                name="country"
                 render={({ field }) => (
                   <Autocomplete
-                    label="City *"
+                    label="Country *"
                     labelPlacement={"outside"}
-                    placeholder="Where do you prefer to meet?"
-                    defaultItems={cities}
-                    className="mx-auto mt-[25px] block w-1/2 pb-[25px]"
+                    placeholder=" "
+                    defaultItems={countries}
+                    className="mx-auto block w-1/2 mt-[25px] mb-[50px] h-10"
+                    variant="bordered"
+                    classNames={{ 
+                      base: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                    }}
                     allowsCustomValue={true}
                     scrollShadowProps={{
                       isEnabled: false,
@@ -195,14 +223,18 @@ export default function CreateStudent() {
 
               <FormField
                 control={form.control}
-                name="country"
+                name="city"
                 render={({ field }) => (
                   <Autocomplete
-                    label="Country *"
+                    label="City *"
                     labelPlacement={"outside"}
-                    placeholder=" "
-                    defaultItems={countries}
-                    className="mx-auto block w-1/2"
+                    placeholder="Where do you prefer to meet?"
+                    defaultItems={cities}
+                    className="mx-auto block w-1/2 h-10"
+                    variant="bordered"
+                    classNames={{ 
+                      base: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                    }}
                     allowsCustomValue={true}
                     scrollShadowProps={{
                       isEnabled: false,
@@ -217,7 +249,6 @@ export default function CreateStudent() {
                   </Autocomplete>
                 )}
               />
-              {/* </div> */}
             </div>
 
             <p className="mx-auto block text-center">
