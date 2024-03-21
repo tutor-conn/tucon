@@ -14,7 +14,7 @@ export function AuthBox({ children }: { children: React.ReactNode }) {
           className="h-auto w-52"
         />
       </Link>
-      <div className="max-w-96 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700">
+      <div className="w-full max-w-96 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700">
         {children}
       </div>
     </div>
