@@ -12,7 +12,6 @@ export const countries = [
   { label: "Hell", key: "hell" },
 ];
 
-
 export const courses = [
   { label: "CIS*3750", key: "cis3750" },
   { label: "CIS*2170", key: "cis2170" },

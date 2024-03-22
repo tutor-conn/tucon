@@ -48,7 +48,9 @@ const formSchema = z.object({
 export default function CreateStudent() {
   const [payRange, setPayRange] = useState<number[]>([15, 40]);
   const [phoneVal, setPhoneVal] = useState<string>("");
-  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(null);
+  const [selectedImage, setSelectedImage] = useState<
+    string | ArrayBuffer | null
+  >(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -118,7 +120,7 @@ export default function CreateStudent() {
 
     toast.error("Not implemented!");
   }
-  
+
   return (
     <ProfileSetupBox>
       <Form {...form}>
@@ -131,10 +133,10 @@ export default function CreateStudent() {
             </div>
             <div className="w-256">
               <div className="grid grid-cols-2 gap-6">
-                <ImageSelector 
-                  selectedImage={selectedImage} 
+                <ImageSelector
+                  selectedImage={selectedImage}
                   setSelectedImage={setSelectedImage}
-                  className="w-[95%] row-span-3"
+                  className="row-span-3 w-[95%]"
                 />
 
                 <FormField
@@ -212,11 +214,10 @@ export default function CreateStudent() {
               </div>
 
               <div className="mb-5 mt-10 text-center">
-                <h1 className="text-3xl font-bold">
-                  Student Details
-                </h1>
-                <p className="mt-1 mx-auto block text-center text-sm">
-                  This information will be used to find you the best possible tutors.
+                <h1 className="text-3xl font-bold">Student Details</h1>
+                <p className="mx-auto mt-1 block text-center text-sm">
+                  This information will be used to find you the best possible
+                  tutors.
                 </p>
               </div>
 
@@ -244,7 +245,7 @@ export default function CreateStudent() {
                       labelPlacement={"outside"}
                       placeholder=" "
                       defaultItems={countries}
-                      className="mx-auto mt-[15px] mb-10 block h-10 w-full"
+                      className="mx-auto mb-10 mt-[15px] block h-10 w-full"
                       variant="bordered"
                       classNames={{
                         base: "[&>*>*>*]:border [&>*>*>*]:border-input",
@@ -273,7 +274,7 @@ export default function CreateStudent() {
                       labelPlacement={"outside"}
                       placeholder="Where do you prefer to meet?"
                       defaultItems={cities}
-                      className="mx-auto mt-[15px] mb-10 block h-10 w-full"
+                      className="mx-auto mb-10 mt-[15px] block h-10 w-full"
                       variant="bordered"
                       classNames={{
                         base: "[&>*>*>*]:border [&>*>*>*]:border-input",
@@ -302,7 +303,7 @@ export default function CreateStudent() {
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
-                          className="flex flex-col space-y-1 row-span-2"
+                          className="row-span-2 flex flex-col space-y-1"
                         >
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
@@ -340,7 +341,7 @@ export default function CreateStudent() {
                   selectionMode="multiple"
                   labelPlacement={"outside"}
                   placeholder=" "
-                  className="mx-auto mt-[15px] mb-10 block h-10 w-full"
+                  className="mx-auto mb-10 mt-[15px] block h-10 w-full"
                   classNames={{
                     label: "[&>*>*>*]:border [&>*>*>*]:border-input",
                   }}
@@ -350,9 +351,7 @@ export default function CreateStudent() {
                   }}
                 >
                   {courses.map((course) => (
-                    <SelectItem key={course.key}>
-                      {course.label}
-                    </SelectItem>
+                    <SelectItem key={course.key}>{course.label}</SelectItem>
                   ))}
                 </Select>
               </div>
