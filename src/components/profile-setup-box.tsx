@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export function ProfileSetupBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100">
-      <Link href="/">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 py-20">
+      <Link href="/create-profile">
         <Image
           src="/tucon-horizontal.svg"
           alt="Tucon Logo"

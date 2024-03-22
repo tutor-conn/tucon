@@ -17,8 +17,11 @@ import { ProfileSetupBox } from "@/components/profile-setup-box";
 import { Anchor } from "@/components/ui/anchor";
 import { toast } from "sonner";
 import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
-import { useState } from "react";
-import { cities, countries } from "@/lib/autofill-data";
+import { useState, ChangeEvent } from "react";
+import { cities, countries, courses } from "@/lib/autofill-data";
+import { ImageSelector } from "@/components/ui/image-selector";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectItem } from "@nextui-org/react";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
@@ -34,8 +37,10 @@ const formSchema = z.object({
   phone: z
     .string()
     .min(1, "Plese enter a phone number")
-    .regex(phoneRegex, "Invalid phone number"),
+    .regex(phoneRegex, "Invalid phone number")
+    .optional(),
   additionalEmail: z.string().email().optional(),
+  meetingPreferences: z.string(),
   aboutMe: z.string().max(256, "Max of 256 characters.").optional(),
   // backgroundExperience: for tutor only?
 });
@@ -43,18 +48,20 @@ const formSchema = z.object({
 export default function CreateStudent() {
   const [payRange, setPayRange] = useState<number[]>([15, 40]);
   const [phoneVal, setPhoneVal] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
-      // payRange: [0, 0],
-      city: "",
-      country: "",
-      gender: "",
       phone: "",
+      gender: "",
       additionalEmail: "",
+      // payRange: [0, 0],
+      country: "",
+      city: "",
+      meetingPreferences: "",
       aboutMe: "",
     },
   });
@@ -75,7 +82,7 @@ export default function CreateStudent() {
     return formattedPhone;
   }
 
-  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handlePhoneChange(e: ChangeEvent<HTMLInputElement>) {
     const value: string = e.target ? e.target.value : "";
 
     if (
@@ -111,7 +118,7 @@ export default function CreateStudent() {
 
     toast.error("Not implemented!");
   }
-
+  
   return (
     <ProfileSetupBox>
       <Form {...form}>
@@ -124,6 +131,12 @@ export default function CreateStudent() {
             </div>
             <div className="w-256">
               <div className="grid grid-cols-2 gap-6">
+                <ImageSelector 
+                  selectedImage={selectedImage} 
+                  setSelectedImage={setSelectedImage}
+                  className="w-[95%] row-span-3"
+                />
+
                 <FormField
                   control={form.control}
                   name="firstName"
@@ -154,20 +167,6 @@ export default function CreateStudent() {
 
                 <FormField
                   control={form.control}
-                  name="gender"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Gender</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
@@ -181,6 +180,44 @@ export default function CreateStudent() {
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  control={form.control}
+                  name="gender"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Gender</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* TODO: add little info button to understand what it is for */}
+                <FormField
+                  control={form.control}
+                  name="additionalEmail"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Additional Email</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="mb-5 mt-10 text-center">
+                <h1 className="text-3xl font-bold">
+                  Student Details
+                </h1>
+                <p className="mt-1 mx-auto block text-center text-sm">
+                  This information will be used to find you the best possible tutors.
+                </p>
               </div>
 
               <Slider
@@ -196,63 +233,129 @@ export default function CreateStudent() {
                 className="mx-auto block w-[70%] py-6"
               />
 
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <Autocomplete
-                    label="Country *"
-                    labelPlacement={"outside"}
-                    placeholder=" "
-                    defaultItems={countries}
-                    className="mx-auto mb-[50px] mt-[25px] block h-10 w-1/2"
-                    variant="bordered"
-                    classNames={{
-                      base: "[&>*>*>*]:border [&>*>*>*]:border-input",
-                    }}
-                    allowsCustomValue={true}
-                    scrollShadowProps={{
-                      isEnabled: false,
-                    }}
-                    {...field}
-                  >
-                    {(item) => (
-                      <AutocompleteItem key={item.key}>
-                        {item.label}
-                      </AutocompleteItem>
-                    )}
-                  </Autocomplete>
-                )}
-              />
+              <div className="grid grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    // maybe use ComboBox instead
+                    <Autocomplete
+                      label="Country *"
+                      labelPlacement={"outside"}
+                      placeholder=" "
+                      defaultItems={countries}
+                      className="mx-auto mt-[15px] mb-10 block h-10 w-full"
+                      variant="bordered"
+                      classNames={{
+                        base: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                      }}
+                      allowsCustomValue={true}
+                      scrollShadowProps={{
+                        isEnabled: false,
+                      }}
+                      {...field}
+                    >
+                      {(item) => (
+                        <AutocompleteItem key={item.key}>
+                          {item.label}
+                        </AutocompleteItem>
+                      )}
+                    </Autocomplete>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <Autocomplete
-                    label="City *"
-                    labelPlacement={"outside"}
-                    placeholder="Where do you prefer to meet?"
-                    defaultItems={cities}
-                    className="mx-auto block h-10 w-1/2"
-                    variant="bordered"
-                    classNames={{
-                      base: "[&>*>*>*]:border [&>*>*>*]:border-input",
-                    }}
-                    allowsCustomValue={true}
-                    scrollShadowProps={{
-                      isEnabled: false,
-                    }}
-                    {...field}
-                  >
-                    {(item) => (
-                      <AutocompleteItem key={item.key}>
-                        {item.label}
-                      </AutocompleteItem>
-                    )}
-                  </Autocomplete>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <Autocomplete
+                      label="City *"
+                      labelPlacement={"outside"}
+                      placeholder="Where do you prefer to meet?"
+                      defaultItems={cities}
+                      className="mx-auto mt-[15px] mb-10 block h-10 w-full"
+                      variant="bordered"
+                      classNames={{
+                        base: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                      }}
+                      allowsCustomValue={true}
+                      scrollShadowProps={{
+                        isEnabled: false,
+                      }}
+                      {...field}
+                    >
+                      {(item) => (
+                        <AutocompleteItem key={item.key}>
+                          {item.label}
+                        </AutocompleteItem>
+                      )}
+                    </Autocomplete>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="meetingPreferences"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>I Prefer to Meet...</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          className="flex flex-col space-y-1 row-span-2"
+                        >
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="all" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              In Person
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="mentions" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Remotely
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="none" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              No Preference
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Select
+                  label="Courses *"
+                  selectionMode="multiple"
+                  labelPlacement={"outside"}
+                  placeholder=" "
+                  className="mx-auto mt-[15px] mb-10 block h-10 w-full"
+                  classNames={{
+                    label: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                  }}
+                  variant="bordered"
+                  scrollShadowProps={{
+                    isEnabled: false,
+                  }}
+                >
+                  {courses.map((course) => (
+                    <SelectItem key={course.key}>
+                      {course.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
             </div>
 
             <p className="mx-auto block text-center">

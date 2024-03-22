@@ -13,7 +13,7 @@ export default function SelectProfileType() {
         <p className="text-gray-500">Are you a Student or a Tutor?</p>
       </div>
 
-      <span className="inline-flex w-full items-center p-6">
+      <span className="inline-flex w-full items-center px-6 pb-6">
         <Anchor href="/create-profile/student">
           <Button className="mr-3 w-40" type="button">
             {/* disabled if user is not signed into an account (could happen if they manually navigate to /create-profile) ? */}
