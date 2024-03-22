@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
 import { useState, ChangeEvent } from "react";
 import { cities, countries, courses } from "@/lib/autofill-data";
-import { ImageSelector } from "@/components/ui/image-selector";
+import { ImageSelector } from "@/components/image-selector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectItem } from "@nextui-org/react";
 
