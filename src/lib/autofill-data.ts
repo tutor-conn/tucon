@@ -2,14 +2,16 @@ export const cities = [
   { label: "Guelph", key: "guelph" },
   { label: "Waterloo", key: "waterloo" },
   { label: "Toronto", key: "toronto" },
-  { label: "lol", key: "lol" },
-  { label: "cringe", key: "cringe" },
+  { label: "Cambridge", key: "cambridge" },
+  { label: "Kitchener", key: "kitchener" },
 ];
 
 export const countries = [
-  { label: "Canada", key: "canada" },
   { label: "Belarus", key: "belarus" },
-  { label: "Hell", key: "hell" },
+  { label: "Canada", key: "canada" },
+  { label: "South Sandwich Islands", key: "south sandwich islands" },
+  { label: "United States", key: "united states" },
+  { label: "United Kingdom", key: "united kingdom" },
 ];
 
 export const courses = [

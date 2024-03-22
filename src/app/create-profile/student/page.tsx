@@ -16,13 +16,20 @@ import {
 import { ProfileSetupBox } from "@/components/profile-setup-box";
 import { Anchor } from "@/components/ui/anchor";
 import { toast } from "sonner";
-import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Slider,
+  Select,
+  SelectItem,
+  Chip,
+} from "@nextui-org/react";
 import { useState, ChangeEvent } from "react";
 import { cities, countries, courses, languages } from "@/lib/autofill-data";
 import { ImageSelector } from "@/components/image-selector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectItem, Chip } from "@nextui-org/react";
-import { asOptionalString } from "@/lib/utils";
+import { asOptionalString, formatPhoneNumber } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
@@ -59,6 +66,8 @@ const formSchema = z.object({
 });
 
 export default function CreateStudent() {
+  const router = useRouter();
+
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -80,20 +89,6 @@ export default function CreateStudent() {
       // aboutMe: "",
     },
   });
-
-  function formatPhoneNumber(phone: string): string {
-    const digitsOnly = phone.replace(/\D/g, "");
-    let formattedPhone = digitsOnly;
-
-    if (digitsOnly.length > 3) {
-      formattedPhone = `(${formattedPhone.substring(0, 3)}) ${formattedPhone.substring(3)}`;
-    }
-    if (digitsOnly.length > 6) {
-      formattedPhone = `${formattedPhone.substring(0, 9)} - ${formattedPhone.substring(9)}`;
-    }
-
-    return formattedPhone;
-  }
 
   function handlePhoneChange(e: ChangeEvent<HTMLInputElement>) {
     const value: string = e.target ? e.target.value : "";
@@ -130,7 +125,8 @@ export default function CreateStudent() {
     // TODO: Call API
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    toast.error("Not implemented!");
+    toast.success("Profile Created!");
+    router.push("/matching");
   }
 
   return (
@@ -213,7 +209,7 @@ export default function CreateStudent() {
                   name="additionalEmail"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Additional Email</FormLabel>
+                      <FormLabel>Alternate Contact Email</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -314,7 +310,7 @@ export default function CreateStudent() {
                           isEnabled: false,
                         }}
                         onInputChange={(val) => {
-                          form.setValue("country", val);
+                          form.setValue("city", val);
                         }}
                       >
                         {(item) => (
