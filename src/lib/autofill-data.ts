@@ -25,3 +25,14 @@ export const courses = [
   { label: "MATH*2130", key: "math2130" },
   { label: "CIS*2430 (Judi 🤮)", key: "cis2430" },
 ];
+
+export const languages = [
+  { label: "English", key: "english" },
+  { label: "Français", key: "french" },
+  { label: "беларускі", key: "belarusian" },
+  { label: "Italiano", key: "italian" },
+  { label: "Português", key: "portuguese" },
+  { label: "Afrikaans", key: "afrikaans" },
+  { label: "日本語", key: "japanese" },
+  { label: "हिंदी", key: "hindi" },
+];

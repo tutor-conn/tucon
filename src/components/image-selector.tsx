@@ -53,6 +53,8 @@ export function ImageSelector({
         <Image
           src={(selectedImage as string) ?? "/default-profile.png"}
           alt="Profile Picture"
+          width={300}
+          height={300}
           className="h-full w-full object-contain"
         />
       </div>

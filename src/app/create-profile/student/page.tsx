@@ -18,10 +18,10 @@ import { Anchor } from "@/components/ui/anchor";
 import { toast } from "sonner";
 import { Autocomplete, AutocompleteItem, Slider } from "@nextui-org/react";
 import { useState, ChangeEvent } from "react";
-import { cities, countries, courses } from "@/lib/autofill-data";
+import { cities, countries, courses, languages } from "@/lib/autofill-data";
 import { ImageSelector } from "@/components/image-selector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem, Chip } from "@nextui-org/react";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
@@ -294,16 +294,44 @@ export default function CreateStudent() {
                   )}
                 />
 
+                <Select
+                  label="Courses *"
+                  selectionMode="multiple"
+                  labelPlacement={"outside"}
+                  placeholder=" "
+                  className="mx-auto mb-6 mt-[15px] block h-10 w-full"
+                  classNames={{
+                    mainWrapper: "border rounded-[4px]",
+                    trigger: "border rounded-[4px]",
+                  }}
+                  variant="bordered"
+                  scrollShadowProps={{ isEnabled: false }}
+                  items={courses}
+                  renderValue={(items) => {
+                    return (
+                      <div className="flex gap-2">
+                        {items.map((item) => (
+                          <Chip key={item.key}>{item.textValue}</Chip>
+                        ))}
+                      </div>
+                    );
+                  }}
+                >
+                  {courses.map((course) => (
+                    <SelectItem key={course.key}>{course.label}</SelectItem>
+                  ))}
+                </Select>
+
                 <FormField
                   control={form.control}
                   name="meetingPreferences"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
+                    <FormItem className="row-span-2 ml-2 space-y-3">
                       <FormLabel>I Prefer to Meet...</FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
-                          className="row-span-2 flex flex-col space-y-1"
+                          className="flex flex-col space-y-1"
                         >
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
@@ -337,21 +365,30 @@ export default function CreateStudent() {
                 />
 
                 <Select
-                  label="Courses *"
+                  label="Languages *"
                   selectionMode="multiple"
                   labelPlacement={"outside"}
-                  placeholder=" "
+                  placeholder="What Languages do you speak?"
                   className="mx-auto mb-10 mt-[15px] block h-10 w-full"
                   classNames={{
-                    label: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                    mainWrapper: "border rounded-[4px]",
+                    trigger: "border rounded-[4px]",
                   }}
                   variant="bordered"
-                  scrollShadowProps={{
-                    isEnabled: false,
+                  scrollShadowProps={{ isEnabled: false }}
+                  items={languages}
+                  renderValue={(items) => {
+                    return (
+                      <div className="flex gap-2">
+                        {items.map((item) => (
+                          <Chip key={item.key}>{item.textValue}</Chip>
+                        ))}
+                      </div>
+                    );
                   }}
                 >
-                  {courses.map((course) => (
-                    <SelectItem key={course.key}>{course.label}</SelectItem>
+                  {languages.map((language) => (
+                    <SelectItem key={language.key}>{language.label}</SelectItem>
                   ))}
                 </Select>
               </div>
