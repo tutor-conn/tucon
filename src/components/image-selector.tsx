@@ -26,14 +26,11 @@ export function ImageSelector({
       };
 
       reader.readAsDataURL(file);
-      // this check is already done by if(file), but typescript is complaining
-      if (event.target.files) {
-        let name: string = event.target.files[0].name;
-        if (name.length > 38) {
-          name = name.substring(0, 35) + "...";
-        }
-        setFileName(name);
+      let name: string = file.name;
+      if (name.length > 38) {
+        name = name.substring(0, 35) + "...";
       }
+      setFileName(name);
     } else {
       setSelectedImage(null);
       setFileName("No File Selected");

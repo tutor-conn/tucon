@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { EventType, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,32 +22,43 @@ import { cities, countries, courses, languages } from "@/lib/autofill-data";
 import { ImageSelector } from "@/components/image-selector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectItem, Chip } from "@nextui-org/react";
+import { asOptionalString } from "@/lib/utils";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Please enter your first name"),
   lastName: z.string().min(1, "Please enter your last name"),
-  // TODO: make custom validation for payRange
-  // payRange: z.number().min(0, "Please enter a minimum rate").max(99, "Please enter a valid maximum rate"),
-  // location: z.string().min(1, "Please enter a location"),
-  city: z.string().min(1, "Please enter a city"),
-  country: z.string().min(1, "Please enter a country"),
-  gender: z.string().optional(),
   phone: z
     .string()
-    .min(1, "Plese enter a phone number")
-    .regex(phoneRegex, "Invalid phone number")
-    .optional(),
-  additionalEmail: z.string().email().optional(),
-  meetingPreferences: z.string(),
-  aboutMe: z.string().max(256, "Max of 256 characters.").optional(),
-  // backgroundExperience: for tutor only?
+    .optional()
+    .refine(
+      (val: string | undefined) => {
+        return (
+          val === undefined ||
+          val === "" ||
+          (phoneRegex.test(val) && val.length == 16)
+        );
+      },
+      { message: "Please enter a valid phone number" },
+    ),
+  gender: asOptionalString(z.string()),
+  additionalEmail: asOptionalString(z.string().email()),
+  payRange: z
+    .array(z.number().min(0, "Invalid Range").max(100, "Invalid Range"))
+    .length(2, "There must be a minimum and maximum"),
+  country: z.string().min(1, "Please enter a country"),
+  city: z.string().min(1, "Please enter a city"),
+  courses: z.array(z.string()).min(1, "Please select at least one course"),
+  languages: z.array(z.string()).min(1, "Please select at least one Language"),
+  meetingPreferences: z.enum(["in person", "remote", "none"], {
+    required_error: "You need to select a meeting preference",
+  }),
+  // aboutMe: asOptionalString(z.string().max(256, "Max of 256 characters.")),
+  // backgroundExperience: tutor only?
 });
 
 export default function CreateStudent() {
-  const [payRange, setPayRange] = useState<number[]>([15, 40]);
-  const [phoneVal, setPhoneVal] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -60,11 +71,13 @@ export default function CreateStudent() {
       phone: "",
       gender: "",
       additionalEmail: "",
-      // payRange: [0, 0],
+      payRange: [15, 40],
       country: "",
       city: "",
-      meetingPreferences: "",
-      aboutMe: "",
+      courses: [],
+      languages: [],
+      meetingPreferences: undefined,
+      // aboutMe: "",
     },
   });
 
@@ -72,11 +85,9 @@ export default function CreateStudent() {
     const digitsOnly = phone.replace(/\D/g, "");
     let formattedPhone = digitsOnly;
 
-    // Add parentheses around the first three digits
     if (digitsOnly.length > 3) {
       formattedPhone = `(${formattedPhone.substring(0, 3)}) ${formattedPhone.substring(3)}`;
     }
-
     if (digitsOnly.length > 6) {
       formattedPhone = `${formattedPhone.substring(0, 9)} - ${formattedPhone.substring(9)}`;
     }
@@ -86,13 +97,14 @@ export default function CreateStudent() {
 
   function handlePhoneChange(e: ChangeEvent<HTMLInputElement>) {
     const value: string = e.target ? e.target.value : "";
+    const phoneVal: string = form.getValues("phone") as string;
 
     if (
       (phoneRegex.test(value) && value.length <= 16) ||
       value.length < phoneVal.length
     ) {
       const formatted = formatPhoneNumber(value);
-      setPhoneVal(formatted);
+      form.setValue("phone", formatted);
     }
   }
 
@@ -173,11 +185,9 @@ export default function CreateStudent() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
-                      <Input
-                        {...field}
-                        value={phoneVal}
-                        onChange={handlePhoneChange}
-                      />
+                      <FormControl>
+                        <Input {...field} onChange={handlePhoneChange} />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -221,17 +231,27 @@ export default function CreateStudent() {
                 </p>
               </div>
 
-              <Slider
-                label="Preferred Tutor Pay Rate *"
+              <FormField
+                control={form.control}
                 name="payRange"
-                // formatOptions={{style: "currency", currency: "CAD"}}
-                step={1}
-                maxValue={100}
-                minValue={0}
-                value={payRange}
-                onChange={(value) => setPayRange(value as number[])}
-                getValue={(value) => formatPayRate(value as number[])}
-                className="mx-auto block w-[70%] py-6"
+                render={({ field }) => (
+                  <FormItem>
+                    <Slider
+                      {...field}
+                      label="Preferred Tutor Pay Rate *"
+                      disableAnimation={true}
+                      step={1}
+                      maxValue={100}
+                      minValue={0}
+                      value={form.getValues("payRange")}
+                      onChange={(value) => {
+                        form.setValue("payRange", value as number[]);
+                      }}
+                      getValue={(value) => formatPayRate(value as number[])}
+                      className="mx-auto block w-[70%] py-6"
+                    />
+                  </FormItem>
+                )}
               />
 
               <div className="grid grid-cols-2 gap-6">
@@ -240,28 +260,35 @@ export default function CreateStudent() {
                   name="country"
                   render={({ field }) => (
                     // maybe use ComboBox instead
-                    <Autocomplete
-                      label="Country *"
-                      labelPlacement={"outside"}
-                      placeholder=" "
-                      defaultItems={countries}
-                      className="mx-auto mb-10 mt-[15px] block h-10 w-full"
-                      variant="bordered"
-                      classNames={{
-                        base: "[&>*>*>*]:border [&>*>*>*]:border-input",
-                      }}
-                      allowsCustomValue={true}
-                      scrollShadowProps={{
-                        isEnabled: false,
-                      }}
-                      {...field}
-                    >
-                      {(item) => (
-                        <AutocompleteItem key={item.key}>
-                          {item.label}
-                        </AutocompleteItem>
-                      )}
-                    </Autocomplete>
+                    <FormItem>
+                      <Autocomplete
+                        {...field}
+                        label="Country *"
+                        labelPlacement={"outside"}
+                        placeholder="What country do you live in?"
+                        defaultItems={countries}
+                        className="mx-auto mt-[15px] block h-10 w-full"
+                        variant="bordered"
+                        classNames={{
+                          base: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                        }}
+                        disableAnimation={true}
+                        allowsCustomValue={true}
+                        scrollShadowProps={{
+                          isEnabled: false,
+                        }}
+                        onInputChange={(val) => {
+                          form.setValue("country", val);
+                        }}
+                      >
+                        {(item) => (
+                          <AutocompleteItem key={item.key}>
+                            {item.label}
+                          </AutocompleteItem>
+                        )}
+                      </Autocomplete>
+                      <FormMessage />
+                    </FormItem>
                   )}
                 />
 
@@ -269,58 +296,81 @@ export default function CreateStudent() {
                   control={form.control}
                   name="city"
                   render={({ field }) => (
-                    <Autocomplete
-                      label="City *"
-                      labelPlacement={"outside"}
-                      placeholder="Where do you prefer to meet?"
-                      defaultItems={cities}
-                      className="mx-auto mb-10 mt-[15px] block h-10 w-full"
-                      variant="bordered"
-                      classNames={{
-                        base: "[&>*>*>*]:border [&>*>*>*]:border-input",
-                      }}
-                      allowsCustomValue={true}
-                      scrollShadowProps={{
-                        isEnabled: false,
-                      }}
-                      {...field}
-                    >
-                      {(item) => (
-                        <AutocompleteItem key={item.key}>
-                          {item.label}
-                        </AutocompleteItem>
-                      )}
-                    </Autocomplete>
+                    <FormItem>
+                      <Autocomplete
+                        {...field}
+                        label="City *"
+                        labelPlacement={"outside"}
+                        placeholder="Where do you prefer to meet?"
+                        defaultItems={cities}
+                        className="mx-auto mt-[15px] block h-10 w-full"
+                        variant="bordered"
+                        classNames={{
+                          base: "[&>*>*>*]:border [&>*>*>*]:border-input",
+                        }}
+                        disableAnimation={true}
+                        allowsCustomValue={true}
+                        scrollShadowProps={{
+                          isEnabled: false,
+                        }}
+                        onInputChange={(val) => {
+                          form.setValue("country", val);
+                        }}
+                      >
+                        {(item) => (
+                          <AutocompleteItem key={item.key}>
+                            {item.label}
+                          </AutocompleteItem>
+                        )}
+                      </Autocomplete>
+                      <FormMessage />
+                    </FormItem>
                   )}
                 />
 
-                <Select
-                  label="Courses *"
-                  selectionMode="multiple"
-                  labelPlacement={"outside"}
-                  placeholder=" "
-                  className="mx-auto mb-6 mt-[15px] block h-10 w-full"
-                  classNames={{
-                    mainWrapper: "border rounded-[4px]",
-                    trigger: "border rounded-[4px]",
-                  }}
-                  variant="bordered"
-                  scrollShadowProps={{ isEnabled: false }}
-                  items={courses}
-                  renderValue={(items) => {
-                    return (
-                      <div className="flex gap-2">
-                        {items.map((item) => (
-                          <Chip key={item.key}>{item.textValue}</Chip>
+                <FormField
+                  control={form.control}
+                  name="courses"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        {...field}
+                        label="Courses *"
+                        selectionMode="multiple"
+                        labelPlacement={"outside"}
+                        placeholder="What Courses do you want help with?"
+                        className="mx-auto mt-[15px] block h-10 w-full"
+                        classNames={{
+                          mainWrapper: "border rounded-[4px]",
+                          trigger: "border rounded-[4px]",
+                        }}
+                        variant="bordered"
+                        disableAnimation={true}
+                        scrollShadowProps={{ isEnabled: false }}
+                        onChange={(e) => {
+                          form.setValue("courses", e.target?.value.split(","));
+                        }}
+                        items={courses}
+                        renderValue={(items) => {
+                          return (
+                            <div className="flex gap-2">
+                              {items.map((item) => (
+                                <Chip key={item.key}>{item.textValue}</Chip>
+                              ))}
+                            </div>
+                          );
+                        }}
+                      >
+                        {courses.map((course) => (
+                          <SelectItem key={course.key}>
+                            {course.label}
+                          </SelectItem>
                         ))}
-                      </div>
-                    );
-                  }}
-                >
-                  {courses.map((course) => (
-                    <SelectItem key={course.key}>{course.label}</SelectItem>
-                  ))}
-                </Select>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <FormField
                   control={form.control}
@@ -335,7 +385,7 @@ export default function CreateStudent() {
                         >
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
-                              <RadioGroupItem value="all" />
+                              <RadioGroupItem value="in person" />
                             </FormControl>
                             <FormLabel className="font-normal">
                               In Person
@@ -343,7 +393,7 @@ export default function CreateStudent() {
                           </FormItem>
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
-                              <RadioGroupItem value="mentions" />
+                              <RadioGroupItem value="remote" />
                             </FormControl>
                             <FormLabel className="font-normal">
                               Remotely
@@ -364,33 +414,52 @@ export default function CreateStudent() {
                   )}
                 />
 
-                <Select
-                  label="Languages *"
-                  selectionMode="multiple"
-                  labelPlacement={"outside"}
-                  placeholder="What Languages do you speak?"
-                  className="mx-auto mb-10 mt-[15px] block h-10 w-full"
-                  classNames={{
-                    mainWrapper: "border rounded-[4px]",
-                    trigger: "border rounded-[4px]",
-                  }}
-                  variant="bordered"
-                  scrollShadowProps={{ isEnabled: false }}
-                  items={languages}
-                  renderValue={(items) => {
-                    return (
-                      <div className="flex gap-2">
-                        {items.map((item) => (
-                          <Chip key={item.key}>{item.textValue}</Chip>
+                <FormField
+                  control={form.control}
+                  name="languages"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        {...field}
+                        label="Languages *"
+                        selectionMode="multiple"
+                        labelPlacement={"outside"}
+                        placeholder="What Languages do you speak?"
+                        className="mx-auto mt-[15px] block h-10 w-full"
+                        classNames={{
+                          mainWrapper: "border rounded-[4px]",
+                          trigger: "border rounded-[4px]",
+                        }}
+                        variant="bordered"
+                        disableAnimation={true}
+                        scrollShadowProps={{ isEnabled: false }}
+                        onChange={(e) => {
+                          form.setValue(
+                            "languages",
+                            e.target?.value.split(","),
+                          );
+                        }}
+                        items={languages}
+                        renderValue={(items) => {
+                          return (
+                            <div className="flex gap-2">
+                              {items.map((item) => (
+                                <Chip key={item.key}>{item.textValue}</Chip>
+                              ))}
+                            </div>
+                          );
+                        }}
+                      >
+                        {languages.map((language) => (
+                          <SelectItem key={language.key}>
+                            {language.label}
+                          </SelectItem>
                         ))}
-                      </div>
-                    );
-                  }}
-                >
-                  {languages.map((language) => (
-                    <SelectItem key={language.key}>{language.label}</SelectItem>
-                  ))}
-                </Select>
+                      </Select>
+                      <FormMessage className="mb-2" />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
 

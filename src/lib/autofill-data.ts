@@ -35,4 +35,5 @@ export const languages = [
   { label: "Afrikaans", key: "afrikaans" },
   { label: "日本語", key: "japanese" },
   { label: "हिंदी", key: "hindi" },
+  { label: "None lol", key: "none" },
 ];
