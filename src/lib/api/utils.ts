@@ -1,3 +1,5 @@
+import { getSiteUrl } from "../utils";
+
 export class TuconApiError extends Error {
   constructor(
     public statusCode: number,
@@ -69,7 +71,7 @@ export async function apiRequest(endpoint: string, options: RequestOptions) {
 
   // NOTE: Requests to /api/* are proxied by Next.js via "rewrites" in next.config.mjs
   // to the API server
-  const response = await fetch("/api" + endpoint, requestInit);
+  const response = await fetch(`${getSiteUrl()}/api${endpoint}`, requestInit);
   const parsedResponse = await parseResponse(response);
   return parsedResponse;
 }
