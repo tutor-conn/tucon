@@ -1,9 +1,24 @@
 import { type ClassValue, clsx } from "clsx";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
+export function getSiteUrl() {
+  if (process.env.NODE_ENV === "development") {
+    return "http://localhost:3000";
+  }
+
+  return `https://tucon.ca`;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function showErrorToast(error: unknown) {
+  if (error instanceof Error) {
+    toast.error(error.message);
+  }
 }
 
 export function formatPhoneNumber(phone: string): string {
@@ -25,4 +40,20 @@ const emptyStringToUndefined = z.literal("").transform(() => undefined);
 
 export function asOptionalString<T extends z.ZodString>(schema: T) {
   return schema.optional().or(emptyStringToUndefined);
+}
+
+export function getRouteFromUserLastView(lastView: string) {
+  if (lastView === "onboarding") {
+    return "/create-profile";
+  }
+
+  if (lastView === "student-home") {
+    return "/matching";
+  }
+
+  if (lastView === "tutor-home") {
+    return "/chat";
+  }
+
+  return null;
 }

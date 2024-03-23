@@ -16,8 +16,8 @@ import {
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { TUCON_API_URL } from "@/lib/constants";
+import { tuconApi } from "@/lib/api";
+import { showErrorToast } from "@/lib/utils";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Please enter your first name").max(64),
@@ -43,15 +43,10 @@ export default function SignUp() {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    await fetch(`${TUCON_API_URL}/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    await tuconApi
+      .register({ body: data })
       .then(() => router.push("/create-profile"))
-      .catch((error) => toast.error("Error: " + error));
+      .catch(showErrorToast);
   }
 
   return (
