@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export function getSiteUrl() {
   return process.env.NEXT_PUBLIC_CF_PAGES_URL
-    ? `https://${process.env.CF_PAGES_URL}`
+    ? `https://${process.env.NEXT_PUBLIC_CF_PAGES_URL}`
     : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : "http://localhost:3000";
