@@ -28,7 +28,6 @@ import { cities, countries, courses, languages } from "@/lib/autofill-data";
 import { ImageSelector } from "@/components/image-selector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { asOptionalString, formatPhoneNumber } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 const payRegex = new RegExp(/^\d{1,3}(\.\d{0,2})?$/);
@@ -70,7 +69,7 @@ const formSchema = z.object({
 });
 
 export default function CreateTutor() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
