@@ -10,9 +10,9 @@ import { redirect } from "next/navigation";
 export const runtime = "edge";
 
 export default function SelectProfileType() {
-  // if (!cookies().has("__session")) {
-  //   redirect("/");
-  // }
+  if (!cookies().has("__session")) {
+    redirect("/");
+  }
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-gray-100">
