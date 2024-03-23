@@ -1,5 +1,3 @@
-import { TUCON_API_URL } from "@/lib/constants";
-
 export class TuconApiError extends Error {
   constructor(
     public statusCode: number,
@@ -69,7 +67,9 @@ export async function apiRequest(endpoint: string, options: RequestOptions) {
     requestInit.body = JSON.stringify(body);
   }
 
-  const response = await fetch(TUCON_API_URL + endpoint, requestInit);
+  // NOTE: Requests to /api/* are proxied by Next.js via "rewrites" in next.config.mjs
+  // to the API server
+  const response = await fetch("/api" + endpoint, requestInit);
   const parsedResponse = await parseResponse(response);
   return parsedResponse;
 }

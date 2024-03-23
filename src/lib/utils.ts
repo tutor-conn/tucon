@@ -3,6 +3,12 @@ import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
+export function getSiteUrl() {
+  return process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
