@@ -131,7 +131,7 @@ export default function CreateTutor() {
   return (
     <div className="flex min-h-[100dvh] flex-col bg-gray-100">
       <SiteHeader />
-      <Page className="max-w-4xl">
+      <Page className="mb-20 max-w-4xl">
         <PageHeader>
           <PageTitle>Create Your Tutor Profile</PageTitle>
         </PageHeader>
@@ -141,6 +141,16 @@ export default function CreateTutor() {
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="space-y-4">
                   <div className="w-256">
+                    <div className="mb-8 text-center">
+                      <h1 className="text-3xl font-bold">
+                        Contact Information
+                      </h1>
+                      <p className="mx-auto mt-1 block text-center text-sm">
+                        This information will be used to identify and contact
+                        you.
+                      </p>
+                    </div>
+
                     <div className="grid grid-cols-2 gap-6">
                       <ImageSelector
                         selectedImage={selectedImage}
