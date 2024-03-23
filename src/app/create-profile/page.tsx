@@ -6,6 +6,9 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+// Needed for Server Components to work with Cloudflare Pages
+export const runtime = "edge";
+
 export default function SelectProfileType() {
   if (!cookies().has("session")) {
     redirect("/");
