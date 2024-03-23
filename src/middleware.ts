@@ -5,7 +5,7 @@
 //
 // export async function middleware(request: NextRequest) {
 //   if (request.nextUrl.pathname === "/") {
-//     const isLoggedIn = request.cookies.has("session");
+//     const isLoggedIn = request.cookies.has("__session");
 //
 //     if (isLoggedIn) {
 //       let me: Awaited<ReturnType<typeof tuconApi.me>>;
@@ -19,7 +19,7 @@
 //
 //       if (me.userId === null) {
 //         // Session is invalid, delete the cookie
-//         request.cookies.delete("session");
+//         request.cookies.delete("__session");
 //         return;
 //       }
 //

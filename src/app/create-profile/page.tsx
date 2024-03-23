@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 export const runtime = "edge";
 
 export default function SelectProfileType() {
-  // if (!cookies().has("session")) {
+  // if (!cookies().has("__session")) {
   //   redirect("/");
   // }
 
