@@ -1,33 +1,43 @@
-"use client";
-
-import { AuthBox } from "@/components/auth-box";
-import { Anchor } from "@/components/ui/anchor";
+import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Page, PageHeader, PageTitle } from "@/components/ui/page";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function SelectProfileType() {
+  if (!cookies().has("session")) {
+    redirect("/");
+  }
+
   return (
-    <AuthBox>
-      <div className="p-3 text-center">
-        <h1 className="p-2 text-3xl font-bold">Create a Profile</h1>
+    <div className="flex min-h-[100dvh] flex-col bg-gray-100">
+      <SiteHeader />
+      <Page className="max-w-4xl">
+        <PageHeader>
+          <PageTitle>Create a Profile</PageTitle>
+        </PageHeader>
+        <main>
+          <Card>
+            <CardContent className="flex min-h-80 flex-col items-center justify-center gap-6">
+              <h1 className="text-3xl font-semibold">
+                Are you a Student or a Tutor?
+              </h1>
 
-        <p className="text-gray-500">Are you a Student or a Tutor?</p>
-      </div>
+              <div className="flex gap-3">
+                <Button asChild size="lg">
+                  <Link href="/create-profile/student">Student</Link>
+                </Button>
 
-      <span className="inline-flex w-full items-center px-6 pb-6">
-        <Anchor href="/create-profile/student">
-          <Button className="mr-3 w-40" type="button">
-            {/* disabled if user is not signed into an account (could happen if they manually navigate to /create-profile) ? */}
-            Student
-          </Button>
-        </Anchor>
-
-        <Anchor href="/create-profile/tutor">
-          <Button className="w-40" type="button">
-            {/* disabled if user is not signed into an account (could happen if they manually navigate to /create-profile) ? */}
-            Tutor
-          </Button>
-        </Anchor>
-      </span>
-    </AuthBox>
+                <Button asChild size="lg">
+                  <Link href="/create-profile/tutor">Tutor</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </main>
+      </Page>
+    </div>
   );
 }
