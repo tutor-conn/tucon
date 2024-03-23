@@ -3,8 +3,32 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { tuconApi } from "@/lib/api";
+import { cookies, headers } from "next/headers";
+import { getRouteFromUserLastView } from "@/lib/utils";
+import { RedirectType, redirect } from "next/navigation";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  if (!cookies().has("__session")) {
+    return <Home />;
+  }
+
+  const data = await tuconApi.me({ headers: headers() });
+
+  const redirectRoute = data.lastView
+    ? getRouteFromUserLastView(data.lastView)
+    : null;
+
+  if (redirectRoute) {
+    redirect(redirectRoute, RedirectType.replace);
+  }
+
+  return <Home />;
+}
+
+function Home() {
   return (
     <div className="flex min-h-[100dvh] flex-col">
       <SiteHeader />
