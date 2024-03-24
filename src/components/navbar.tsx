@@ -52,7 +52,7 @@ export function Navbar({ message }: NavbarProps) {
             size="nav_sm"
             className="text-secondary"
           >
-            <Link href="/matching">Chat</Link>
+            <Link href="/chat">Chat</Link>
           </Button>
         </div>
       ) : (
@@ -62,7 +62,7 @@ export function Navbar({ message }: NavbarProps) {
           size="nav_sm"
           className="text-secondary"
         >
-          <Link href="/matching">Chat</Link>
+          <Link href="/chat">Chat</Link>
         </Button>
       )}
 
