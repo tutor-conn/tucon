@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Tooltip,
   TooltipContent,
@@ -91,10 +92,16 @@ interface MessagesProps {
 
 function Messages({ messages }: MessagesProps) {
   return (
-    <main className="flex flex-1 flex-col gap-5 p-8">
-      {messages.map((message) => (
-        <Message key={message.id} message={message} />
-      ))}
+    <main className="relative flex-1">
+      <div className="absolute h-full w-full">
+        <ScrollArea className="h-full">
+          <div className="flex flex-col gap-4 p-4">
+            {messages.map((message) => (
+              <Message key={message.id} message={message} />
+            ))}
+          </div>
+        </ScrollArea>
+      </div>
     </main>
   );
 }
