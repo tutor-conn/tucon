@@ -32,6 +32,26 @@ export function SiteHeader() {
         />
       </Link>
       <span className="sr-only">Tucon</span>
+      <nav>
+        <ul className="flex ml-auto gap-2">
+          <li>
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/about">About</Link>
+            </Button>
+          </li>
+          <li className="relative">
+            <span className="absolute inset-y-0 left-0 w-0.5 bg-gray-300" aria-hidden="true"></span>
+            <Button className="ml-2" asChild variant="ghost" size="sm">
+              <Link href="/sign-up">Sign up</Link>
+            </Button>
+          </li>
+          <li>
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/login">Log in</Link>
+            </Button>
+          </li>
+        </ul>
+      </nav>
       <nav className="flex flex-1 justify-between">
         <div className="flex gap-4 sm:gap-6">
           {isLoading && (
