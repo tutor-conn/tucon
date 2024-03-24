@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -19,16 +18,29 @@ interface NavbarProps {
 export function Navbar({ message }: NavbarProps) {
   return (
     <header className="flex h-14 items-center border-b-2 border-secondary px-4 lg:px-6">
-      <Link href="/">
-        <Image
-          alt="Tucon Logo"
-          src="/tucon-horizontal.svg"
-          height={0}
-          width={0}
-          className="h-10 w-36"
-          priority
-        />
-      </Link>
+      {message === "isStudent" ? (
+        <Link href="/matching">
+          <Image
+            alt="Tucon Logo"
+            src="/tucon-horizontal.svg"
+            height={0}
+            width={0}
+            className="h-10 w-36"
+            priority
+          />
+        </Link>
+      ) : (
+        <Link href="/chat">
+          <Image
+            alt="Tucon Logo"
+            src="/tucon-horizontal.svg"
+            height={0}
+            width={0}
+            className="h-10 w-36"
+            priority
+          />
+        </Link>
+      )}
       <span className="sr-only">Tucon</span>
 
       <Divider
@@ -95,6 +107,9 @@ export function Navbar({ message }: NavbarProps) {
               <DropdownMenuContent className="w-30 mr-7">
                 <DropdownMenuItem>
                   <Link href="/settings">Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/view-profile">View Profile</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator className="bg-secondary opacity-15" />
