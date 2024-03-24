@@ -2,7 +2,9 @@
 import { Navbar } from "@/components/navbar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -13,10 +15,20 @@ import {
 import { Page, PageHeader, PageTitle } from "@/components/ui/page";
 
 export default function ViewProfile() {
+  const router = useRouter();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar message={"isStudent"} />
-      <Page>
+      <Page className="my-6">
+        <button type="button" onClick={() => router.push("/matching")}>
+          <Image
+            src="/back.png"
+            width={50}
+            height={50}
+            alt="Picture of the author"
+          />
+        </button>
         <main className="flex flex-1 justify-center">
           <Card className="mx-4 my-6 w-full space-y-6 p-0 shadow-xl sm:w-1/2 sm:p-8">
             <CardHeader className="space-y-8">
