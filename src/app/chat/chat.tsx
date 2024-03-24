@@ -67,10 +67,7 @@ export function ChatSection(props: ChatProps) {
   }
 
   return (
-    <div className="flex h-full flex-col bg-gray-100">
-      <div className="flex flex-1">
-        {messages && <Messages messages={messages} />}
-      </div>
+    <div className="flex h-full flex-col-reverse bg-gray-100">
       <form onSubmit={form.handleSubmit(onSubmitMessageForm)}>
         <div className="flex gap-4 border-t bg-card p-4">
           <Input
@@ -82,6 +79,10 @@ export function ChatSection(props: ChatProps) {
           </Button>
         </div>
       </form>
+
+      <div className="flex flex-1">
+        {messages && <Messages messages={messages} />}
+      </div>
     </div>
   );
 }
@@ -91,12 +92,13 @@ interface MessagesProps {
 }
 
 function Messages({ messages }: MessagesProps) {
+  const reversedMessages = [...messages].reverse();
   return (
     <main className="relative flex-1">
       <div className="absolute h-full w-full">
         <ScrollArea className="h-full">
-          <div className="flex flex-col gap-4 p-4">
-            {messages.map((message) => (
+          <div className="flex flex-col-reverse gap-4 p-4">
+            {reversedMessages.map((message) => (
               <Message key={message.id} message={message} />
             ))}
           </div>

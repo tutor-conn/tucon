@@ -41,7 +41,7 @@ export default function Login() {
     await tuconApi
       .login({ body: data })
       .then(() => {
-        queryClient.removeQueries({ queryKey: ["me"] });
+        queryClient.resetQueries({ queryKey: ["me"] });
         router.push("/");
       })
       .catch(showErrorToast);
