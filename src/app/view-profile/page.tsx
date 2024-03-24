@@ -39,7 +39,7 @@ export default function ViewProfile() {
                   <p className="text-2xl">Male</p>
                 </div>
                 <div>
-                  <h1 className="mb-2 text-3xl">Cost</h1>
+                  <h1 className="mb-2 text-3xl">Pay Rate/hr</h1>
                   <p className="text-2xl">$25</p>
                 </div>
                 <div>
@@ -60,10 +60,7 @@ export default function ViewProfile() {
                 <div>
                   <h1 className="mb-2 text-3xl">About Me</h1>
                   <p className="rounded bg-muted p-8 text-2xl">
-                    Hi my name is Eric and I like playing Clash Royale.
-                    <br />
-                    <br />
-                    Hee hee hee haw.
+                    Hi, my name is Eric and I like playing Clash Royale.
                   </p>
                 </div>
               </div>
