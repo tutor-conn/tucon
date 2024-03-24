@@ -61,16 +61,16 @@ export function asOptionalString<T extends z.ZodString>(schema: T) {
   return schema.optional().or(emptyStringToUndefined);
 }
 
-export function getRouteFromUserLastView(lastView: string) {
-  if (lastView === "onboarding") {
+export function getHomeRouteFromUserHome(home: string) {
+  if (home === "onboarding") {
     return "/create-profile";
   }
 
-  if (lastView === "student-home") {
+  if (home === "student") {
     return "/matching";
   }
 
-  if (lastView === "tutor-home") {
+  if (home === "tutor") {
     return "/chat";
   }
 

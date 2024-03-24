@@ -7,7 +7,7 @@ import { tuconApi } from "@/lib/api";
 import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useRouter } from "next/navigation";
-import { getRouteFromUserLastView } from "@/lib/utils";
+import { getHomeRouteFromUserHome } from "@/lib/utils";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import {
   DropdownMenuContent,
@@ -23,14 +23,12 @@ export function SiteHeader() {
     queryFn: tuconApi.me,
   });
 
-  const lastViewRoute = data?.lastView
-    ? getRouteFromUserLastView(data.lastView)
-    : null;
+  const homeRoute = data?.home ? getHomeRouteFromUserHome(data.home) : null;
 
   return (
     <header className="flex h-14 items-center bg-background px-6 md:px-16 lg:px-24">
       <div className="flex flex-1 gap-4">
-        <Link href={lastViewRoute ?? "/"}>
+        <Link href={homeRoute ?? "/"}>
           <Image
             src="/tucon-horizontal.svg"
             height={0}
@@ -108,7 +106,12 @@ function SignInSignUpButtons() {
 }
 
 interface UserButtonsProps {
-  userData: { userId: number; firstName: string; lastName: string };
+  userData: {
+    userId: number;
+    firstName: string;
+    lastName: string;
+    home: "onboarding" | "student" | "tutor";
+  };
 }
 
 function UserButtons({ userData }: UserButtonsProps) {
@@ -130,9 +133,10 @@ function UserButtons({ userData }: UserButtonsProps) {
         <span className="text-[16px] text-secondary">
           {userData.firstName} {userData.lastName}
         </span>
-        {message === "isStudent" ? (
+        {userData.home === "student" && (
           <span className="text-xs text-secondary opacity-50">Student</span>
-        ) : (
+        )}
+        {userData.home === "tutor" && (
           <span className="text-xs text-secondary opacity-50">Tutor</span>
         )}
       </div>

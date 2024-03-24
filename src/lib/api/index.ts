@@ -16,14 +16,14 @@ interface MeResponseLoggedOut {
   userId: null;
   firstName: undefined;
   lastName: undefined;
-  lastView: undefined;
+  home: undefined;
 }
 
 interface MeResponseLoggedIn {
   userId: number;
   firstName: string;
   lastName: string;
-  lastView: string;
+  home: "onboarding" | "student" | "tutor";
 }
 
 function me(
