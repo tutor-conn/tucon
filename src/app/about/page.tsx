@@ -4,22 +4,8 @@ import Image from "next/image";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import React from "react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Button,
-} from "@nextui-org/react";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const handleMouseEnter = () => {
-    setIsOpen(true);
-  };
-  const handleMouseLeave = () => {
-    setIsOpen(false);
-  };
-
   return (
     <div className="flex min-h-[100dvh] flex-col">
       <SiteHeader />
@@ -55,36 +41,11 @@ export default function Home() {
                 height="100"
                 width="550"
               />
-              <div className="flex">
-                <div className="flex flex-col gap-2">
-                  <Popover
-                    isOpen={isOpen}
-                    onOpenChange={(open) => setIsOpen(open)}
-                    placement="bottom"
-                    motionProps={{ variants: { enter: {}, exit: {} } }}
-                  >
-                    <PopoverTrigger
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <Button>Open Popover</Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div className="px-1 py-2">
-                        <div className="text-small font-bold">
-                          Popover Content
-                        </div>
-                        <div className="text-tiny">
-                          This is the popover content
-                        </div>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                  <p className="text-small text-default-400">
-                    Open: {isOpen ? "true" : "false"}
-                  </p>
-                </div>
-              </div>
+
+              {/*
+Removed the popover. If you want to add it back, it's at
+https://github.com/tutor-conn/tucon/blob/cc99a9f97150ce640cf4273c1c8093b80fbc39ee/src/app/about/page.tsx#L58-L87
+              */}
             </div>
           </div>
         </section>
