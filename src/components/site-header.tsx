@@ -54,18 +54,36 @@ export function SiteHeader() {
         {/* <span className="border-l-2 border-gray-300" /> */}
 
         <nav className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/about">About</Link>
-          </Button>
+          {isLoading && <Skeleton className="h-5 w-[70px]" />}
+
+          {data && data.userId === null && (
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/about">About</Link>
+            </Button>
+          )}
+
+          {data && data.userId !== null && (
+            <>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/matching">Match</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/chat">Chat</Link>
+              </Button>
+            </>
+          )}
         </nav>
       </div>
 
       <div className="flex gap-4 sm:gap-6">
         {isLoading && (
-          <>
-            <Skeleton className="h-9 w-[70px]" />
-            <Skeleton className="h-9 w-[70px]" />
-          </>
+          <div className="flex gap-3">
+            <div className="flex flex-col items-end justify-center gap-1">
+              <Skeleton className="h-4 w-[70px]" />
+              <Skeleton className="h-3.5 w-[40px]" />
+            </div>
+            <Skeleton className="h-10 w-10 rounded-full" />
+          </div>
         )}
 
         {data && data.userId === null && <SignInSignUpButtons />}
@@ -103,6 +121,7 @@ function UserButtons({ userData }: UserButtonsProps) {
     router.push("/");
   }
 
+  // TODO: Replace with actual user type
   const message = "isStudent";
 
   return (
