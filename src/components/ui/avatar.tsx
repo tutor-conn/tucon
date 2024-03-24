@@ -3,6 +3,8 @@
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
+import { UserRound } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 const Avatar = React.forwardRef<
@@ -43,7 +45,9 @@ const AvatarFallback = React.forwardRef<
       className,
     )}
     {...props}
-  />
+  >
+    <UserRound className="h-[60%] w-[60%] text-gray-600" />
+  </AvatarPrimitive.Fallback>
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 

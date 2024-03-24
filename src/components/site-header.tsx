@@ -8,6 +8,14 @@ import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useRouter } from "next/navigation";
 import { getRouteFromUserLastView } from "@/lib/utils";
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { LogOut, Settings, User } from "lucide-react";
 
 export function SiteHeader() {
   const { data, isLoading } = useQuery({
@@ -42,7 +50,7 @@ export function SiteHeader() {
           <span className="sr-only">Tucon</span>
         </Link>
 
-        {/* Vertical divider */}
+        {/* Vertical divider - uncomment if you want to use it */}
         {/* <span className="border-l-2 border-gray-300" /> */}
 
         <nav className="flex items-center gap-2">
@@ -91,19 +99,51 @@ function UserButtons({ userData }: UserButtonsProps) {
 
   async function logout() {
     await tuconApi.logout();
-    console.log("removing queries for me");
     queryClient.resetQueries({ queryKey: ["me"] });
     router.push("/");
   }
 
+  const message = "isStudent";
+
   return (
-    <>
-      <Button variant="outline" size="sm" onClick={logout}>
-        Log out
-      </Button>
-      <Avatar className="h-9 w-9">
-        <AvatarFallback />
-      </Avatar>
-    </>
+    <div className="flex gap-3">
+      <div className="flex flex-col items-end">
+        <span className="text-[16px] text-secondary">
+          {userData.firstName} {userData.lastName}
+        </span>
+        {message === "isStudent" ? (
+          <span className="text-xs text-secondary opacity-50">Student</span>
+        ) : (
+          <span className="text-xs text-secondary opacity-50">Tutor</span>
+        )}
+      </div>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger className="rounded-full">
+          <Avatar className="h-10 w-10">
+            <AvatarFallback />
+          </Avatar>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent className="w-30 mr-7">
+          <DropdownMenuItem onClick={() => router.push("/view-profile")}>
+            <User className="mr-2 h-4 w-4" />
+            <span>My Profile</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={() => router.push("/settings")}>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator className="bg-secondary opacity-15" />
+
+          <DropdownMenuItem onClick={logout} className="text-danger">
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }
