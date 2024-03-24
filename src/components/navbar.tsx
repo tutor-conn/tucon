@@ -16,7 +16,7 @@ interface NavbarProps {
   message: string;
 }
 
-export function Navbar({message}: NavbarProps) {
+export function Navbar({ message }: NavbarProps) {
   return (
     <header className="flex h-14 items-center border-b-2 border-secondary px-4 lg:px-6">
       <Link href="/">
@@ -96,6 +96,7 @@ export function Navbar({message}: NavbarProps) {
                 <DropdownMenuItem>
                   <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
+
                 <DropdownMenuSeparator className="bg-secondary opacity-15" />
                 <DropdownMenuItem>
                   <Link className="text-danger" href="/">
