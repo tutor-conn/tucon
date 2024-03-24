@@ -8,8 +8,8 @@ import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useRouter } from "next/navigation";
 import { getHomeRouteFromUserHome } from "@/lib/utils";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -62,9 +62,11 @@ export function SiteHeader() {
 
           {data && data.userId !== null && (
             <>
-              <Button asChild variant="ghost" size="sm">
-                <Link href="/matching">Match</Link>
-              </Button>
+              {data.home === "student" && (
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/matching">Match</Link>
+                </Button>
+              )}
               <Button asChild variant="ghost" size="sm">
                 <Link href="/chat">Chat</Link>
               </Button>
@@ -123,9 +125,6 @@ function UserButtons({ userData }: UserButtonsProps) {
     queryClient.resetQueries({ queryKey: ["me"] });
     router.push("/");
   }
-
-  // TODO: Replace with actual user type
-  const message = "isStudent";
 
   return (
     <div className="flex gap-3">
