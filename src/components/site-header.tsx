@@ -25,6 +25,24 @@ export function SiteHeader() {
 
   const homeRoute = data?.home ? getHomeRouteFromUserHome(data.home) : null;
 
+  const navButtons = [];
+
+  if (data?.home === "student") {
+    navButtons.push(
+      <Button key="/matching" asChild variant="ghost" size="sm">
+        <Link href="/matching">Match</Link>
+      </Button>,
+    );
+  }
+
+  if (data?.home === "student" || data?.home === "tutor") {
+    navButtons.push(
+      <Button key="/chat" asChild variant="ghost" size="sm">
+        <Link href="/chat">Chat</Link>
+      </Button>,
+    );
+  }
+
   return (
     <header className="flex h-14 items-center bg-background px-6 md:px-16 lg:px-24">
       <div className="flex flex-1 gap-4">
@@ -48,30 +66,13 @@ export function SiteHeader() {
           <span className="sr-only">Tucon</span>
         </Link>
 
-        {/* Vertical divider - uncomment if you want to use it */}
-        {/* <span className="border-l-2 border-gray-300" /> */}
-
         <nav className="flex items-center gap-2">
           {isLoading && <Skeleton className="h-5 w-[70px]" />}
 
-          {data && data.userId === null && (
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/about">About</Link>
-            </Button>
+          {navButtons.length > 0 && (
+            <span className="h-full border-l-2 border-gray-300" />
           )}
-
-          {data && data.userId !== null && (
-            <>
-              {data.home === "student" && (
-                <Button asChild variant="ghost" size="sm">
-                  <Link href="/matching">Match</Link>
-                </Button>
-              )}
-              <Button asChild variant="ghost" size="sm">
-                <Link href="/chat">Chat</Link>
-              </Button>
-            </>
-          )}
+          {navButtons}
         </nav>
       </div>
 
@@ -97,10 +98,14 @@ export function SiteHeader() {
 function SignInSignUpButtons() {
   return (
     <>
-      <Button asChild variant="secondary" size="sm">
+      <Button asChild variant="ghost" size="sm">
+        <Link href="/about">About</Link>
+      </Button>
+      <span className="border-l-2 border-gray-300" />
+      <Button asChild variant="ghost" size="sm">
         <Link href="/sign-up">Sign up</Link>
       </Button>
-      <Button asChild variant="outline" size="sm">
+      <Button asChild variant="ghost" size="sm">
         <Link href="/login">Log in</Link>
       </Button>
     </>

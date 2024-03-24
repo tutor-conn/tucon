@@ -1,9 +1,9 @@
 "use client"; //for the event handlers
-import { Navbar } from "@/components/navbar";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SiteHeader } from "@/components/site-header";
 
 let tutors = [
   {
@@ -193,7 +193,8 @@ export default function MatchingPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar message={"isStudent"} />
+      <SiteHeader />
+      <div className="border-t" />
       <main className="flex-1">
         <section className="pt-8">
           <div className="flex justify-center">

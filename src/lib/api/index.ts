@@ -74,6 +74,18 @@ function sendChatMessage(
   });
 }
 
+function createStudentProfile(
+  options: RequestOptionsBodyRequired,
+): Promise<unknown> {
+  return apiRequest("/profiles/student", { method: "POST", ...options });
+}
+
+function createTutorProfile(
+  options: RequestOptionsBodyRequired,
+): Promise<unknown> {
+  return apiRequest("/profiles/tutor", { method: "POST", ...options });
+}
+
 export const tuconApi = {
   register,
   login,
@@ -82,4 +94,6 @@ export const tuconApi = {
   getChats,
   getChatMessages,
   sendChatMessage,
+  createStudentProfile,
+  createTutorProfile,
 };

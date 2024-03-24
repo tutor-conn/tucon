@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import { Page, PageHeader, PageTitle } from "@/components/ui/page";
 import { SiteHeader } from "@/components/site-header";
 import { Card, CardContent } from "@/components/ui/card";
+import { tuconApi } from "@/lib/api";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
@@ -122,10 +123,7 @@ export default function CreateStudent() {
   }
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
-
-    // TODO: Call API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await tuconApi.createStudentProfile({ body: data });
 
     toast.success("Profile Created!");
     router.push("/matching");

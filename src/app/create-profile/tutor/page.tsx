@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { Page, PageHeader, PageTitle } from "@/components/ui/page";
 import { Card, CardContent } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
+import { tuconApi } from "@/lib/api";
 
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 const payRegex = new RegExp(/^\d{1,3}(\.\d{0,2})?$/);
@@ -72,7 +73,7 @@ const formSchema = z.object({
 });
 
 export default function CreateTutor() {
-  // const router = useRouter();
+  const router = useRouter();
 
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
@@ -120,12 +121,10 @@ export default function CreateTutor() {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
 
-    // TODO: Call API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await tuconApi.createTutorProfile({ body: data });
 
-    toast.error("Not Implemented!");
-    // toast.success("Profile Created!");
-    // router.push("/chat");
+    toast.success("Profile Created!");
+    router.push("/chat");
   }
 
   return (
