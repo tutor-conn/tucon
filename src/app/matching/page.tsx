@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 let tutors = [
   {
@@ -58,6 +59,7 @@ let tutors = [
 
 export default function MatchingPage() {
   const [tutorCount, setTutorCount] = useState(0);
+  const router = useRouter()
 
   // Get the current tutor based on tutorCount
   const currentTutor = tutors[tutorCount];
@@ -92,8 +94,7 @@ export default function MatchingPage() {
 
   // Function to handle profile picture click
   function handleProfileClick() {
-    // TODO
-    toast.error("A full profile view would be shown");
+    router.push('/view-profile')
   }
 
   function renderTutorCardContent(

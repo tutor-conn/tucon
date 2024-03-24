@@ -1,5 +1,5 @@
 "use client";
-
+import { Navbar } from "@/components/navbar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,29 +11,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Page, PageHeader, PageTitle } from "@/components/ui/page";
-import { AvatarEdit } from "@/components/avatar-edit";
 
 export default function ViewProfile() {
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-gray-100">
-      <SiteHeader />
+    <div className="flex min-h-screen flex-col">
+      <Navbar message={"isStudent"} />
       <Page>
-        <PageHeader>
-          <PageTitle>View Profile</PageTitle>
-        </PageHeader>
-        <main className="p-100 grid items-start gap-6 md:grid-cols-[1fr_300px]">
-          <Card className="mx-36 my-4 p-8">
-            <CardHeader>
+        <main className="flex-1 flex justify-center">
+          <Card className="w-full sm:w-1/2 mx-4 my-6 p-0 sm:p-8 shadow-xl space-y-6">
+            <CardHeader className="space-y-8">
               <CardTitle className="text-center text-4xl">
-                Eric&apos;s Profile
+                Tutor Profile
               </CardTitle>
-            </CardHeader>
-            <CardContent>
               <Avatar className="m-auto h-52 w-52">
-                <AvatarImage src="/eric.jpg" />
+                <AvatarImage src="/default-profile.png" />
                 <AvatarFallback />
               </Avatar>
-              <div className="flex flex-col space-y-6 pt-6">
+            </CardHeader>
+            <CardContent className="columns-1 lg:columns-2">
+              <div className="flex flex-col space-y-6">
                 <div>
                   <h1 className="mb-2 text-3xl">Gender</h1>
                   <p className="text-2xl">Male</p>
@@ -43,8 +39,12 @@ export default function ViewProfile() {
                   <p className="text-2xl">$25</p>
                 </div>
                 <div>
-                  <h1 className="mb-2 text-3xl">City</h1>
-                  <p className="text-2xl">Guelph, ON</p>
+                  <h1 className="mb-2 text-3xl">Location</h1>
+                  <p className="text-2xl">Guelph, Canada</p>
+                </div>
+                <div>
+                  <h1 className="mb-2 text-3xl">Remote Option?</h1>
+                  <p className="text-2xl">Yes</p>
                 </div>
                 <div>
                   <h1 className="mb-2 text-3xl">Courses</h1>
@@ -58,10 +58,10 @@ export default function ViewProfile() {
                   </div>
                 </div>
                 <div>
-                  <h1 className="mb-2 text-3xl">About Me</h1>
-                  <p className="rounded bg-muted p-8 text-2xl">
-                    Hi, my name is Eric and I like playing Clash Royale.
-                  </p>
+                  <h1 className="mb-2 text-3xl">Language</h1>
+                  <p className="text-2xl">English</p>
+                </div>
+                <div>
                 </div>
               </div>
             </CardContent>
