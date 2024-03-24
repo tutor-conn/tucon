@@ -3,7 +3,6 @@ import { Navbar } from "@/components/navbar";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useState } from "react";
-import React, { useEffect } from "react";
 
 let tutors = [
   {
@@ -62,11 +61,6 @@ export default function MatchingPage() {
 
   // Get the current tutor based on tutorCount
   const currentTutor = tutors[tutorCount];
-
-  // Call handleRefreshClick() on page startup
-  useEffect(() => {
-    handleRefreshClick();
-  }, []);
 
   // Function to handle button click
   function handleButtonClick(choice: string) {
@@ -181,7 +175,7 @@ export default function MatchingPage() {
           {/* Refresh card content */}
           <div className="text-center">
             <p className="text-2xl font-semibold">
-              Looks like you've reached the end.
+              Looks like you&apos;ve reached the end.
             </p>
             <p className="text-xl">Click to refresh and see more tutors.</p>
             <button
