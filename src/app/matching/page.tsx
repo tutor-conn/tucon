@@ -53,7 +53,7 @@ let tutors = [
     payRate: "17",
     course: "ENG*2130",
     city: "Mississauga",
-  }
+  },
 ];
 // Tutor data: elaine janelle bartholomew brody peter celine
 
@@ -64,12 +64,16 @@ export default function MatchingPage() {
   const currentTutor = tutors[tutorCount];
 
   // Call handleRefreshClick() on page startup
-  useEffect(() => {handleRefreshClick();}, []);
+  useEffect(() => {
+    handleRefreshClick();
+  }, []);
 
   // Function to handle button click
   function handleButtonClick(choice: string) {
     if (choice === "✓") {
-      toast.error("You accepted this tutor. They have been notified, please be patient for a response.");
+      toast.error(
+        "You accepted this tutor. They have been notified, please be patient for a response.",
+      );
     } else {
       toast.error("You declined this tutor.");
     }
@@ -98,7 +102,11 @@ export default function MatchingPage() {
     toast.error("A full profile view would be shown");
   }
 
-  function renderTutorCardContent(tutorCount: number, handleProfileClick: () => void, handleButtonClick: (choice: string) => void) {
+  function renderTutorCardContent(
+    tutorCount: number,
+    handleProfileClick: () => void,
+    handleButtonClick: (choice: string) => void,
+  ) {
     if (tutorCount < 6) {
       // Render content for tutor card when tutorCount is greater than 0
       return (
@@ -169,18 +177,25 @@ export default function MatchingPage() {
     } else {
       // Render message when tutorCount is 0
       return (
-        <div className="flex items-center justify-center p-8 h-full">
+        <div className="flex h-full items-center justify-center p-8">
           {/* Refresh card content */}
           <div className="text-center">
-            <p className="text-2xl font-semibold">Looks like you've reached the end.</p>
+            <p className="text-2xl font-semibold">
+              Looks like you've reached the end.
+            </p>
             <p className="text-xl">Click to refresh and see more tutors.</p>
-            <button className="mt-6 bg-orange-500 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg text-2xl" onClick={handleRefreshClick}>Refresh</button>
+            <button
+              className="mt-6 rounded-lg bg-orange-500 px-6 py-3 text-2xl font-bold text-white hover:bg-orange-700"
+              onClick={handleRefreshClick}
+            >
+              Refresh
+            </button>
           </div>
         </div>
       );
     }
   }
-  
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar message={"isStudent"} />
@@ -194,8 +209,13 @@ export default function MatchingPage() {
               style={{ height: "800px" }} // Set fixed dimensions for the card
             >
               {/* Card contents */}
-              {renderTutorCardContent(tutorCount, handleProfileClick, handleButtonClick)}
-            </div> {/* end card */}
+              {renderTutorCardContent(
+                tutorCount,
+                handleProfileClick,
+                handleButtonClick,
+              )}
+            </div>{" "}
+            {/* end card */}
           </div>
         </section>
       </main>
