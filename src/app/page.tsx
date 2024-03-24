@@ -65,25 +65,18 @@ function Home() {
             </div>
           </div>
         </section>
-        {/* <section>
-          <div className="container">
-            <div className="flex flex-col justify-center">
-              <Image
-                alt="Tucon Logo"
-                src="/tucon-vertical.svg"
-                height={0}
-                width={0}
-                className="w-[30%] mx-auto"
-                priority
-              />
-              <h1 className="mx-auto font-bold text-4xl tracking-tighter text-secondary">Our Mission</h1>
-              <p className="w-[75%] mx-auto text-center text-xl">
-                Our goal is to provide a platform that seamlessly connects University of Guelph students with qualified tutors. 
-                We aim to simplify the tutor search process and provide a space where students can easily discover, chat, and engage with tutors.
-              </p>
-            </div>
+        <section>
+          <div className="flex mt-[150px] bg-gray-100">
+            <Image
+              alt="University of Guelph"
+              className="max-w-[200px] opacity-65 m-8"
+              src="/guelph_logo.png"
+              priority
+              height="100"
+              width="550"
+            />
           </div>
-        </section> */}
+        </section>
       </main>
       <SiteFooter />
     </div>
