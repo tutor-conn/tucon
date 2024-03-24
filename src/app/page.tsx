@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { tuconApi } from "@/lib/api";
 import { cookies, headers } from "next/headers";
-import { getRouteFromUserLastView } from "@/lib/utils";
+import { getHomeRouteFromUserHome } from "@/lib/utils";
 import { RedirectType, redirect } from "next/navigation";
 
 export const runtime = "edge";
