@@ -34,8 +34,8 @@ function Home() {
     <div className="flex min-h-[100dvh] flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <section className="w-full pt-12 md:pt-24 lg:pt-32">
-          <div className="container px-4 md:px-6">
+        <section className="w-full px-6 pt-12 md:px-16 md:pt-24 lg:px-24 lg:pt-32">
+          <div className="container px-0">
             <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
               <div className="flex flex-col justify-center space-y-2">
                 <div className="space-y-2">
@@ -53,7 +53,7 @@ function Home() {
                   </Button>
                 </div>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="ml-auto flex items-center">
                 <Image
                   alt="Hero"
                   className="aspect-video h-auto w-auto overflow-hidden rounded-xl object-cover object-center"
@@ -64,6 +64,18 @@ function Home() {
                 />
               </div>
             </div>
+          </div>
+        </section>
+        <section>
+          <div className="mt-[150px] flex bg-gray-100">
+            <Image
+              alt="University of Guelph"
+              className="m-8 max-w-[200px] opacity-65"
+              src="/guelph_logo.png"
+              priority
+              height="100"
+              width="550"
+            />
           </div>
         </section>
       </main>

@@ -20,7 +20,7 @@ export function SiteHeader() {
     : null;
 
   return (
-    <header className="flex h-14 items-center bg-background px-4 lg:px-6">
+    <header className="flex h-14 items-center justify-between bg-background px-6 pt-4 md:px-16 lg:px-24">
       <Link href={lastViewRoute ?? "/"}>
         <Image
           alt="Tucon Logo"
@@ -32,9 +32,30 @@ export function SiteHeader() {
         />
       </Link>
       <span className="sr-only">Tucon</span>
+      <nav>
+        <ul className="ml-auto flex gap-2">
+          <li>
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/about">About</Link>
+            </Button>
+          </li>
+          <li className="relative">
+            <span
+              className="absolute inset-y-0 left-0 w-0.5 bg-gray-300"
+              aria-hidden="true"
+            ></span>
+            <Button className="ml-2" asChild variant="ghost" size="sm">
+              <Link href="/sign-up">Sign up</Link>
+            </Button>
+          </li>
+          <li>
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/login">Log in</Link>
+            </Button>
+          </li>
+        </ul>
+      </nav>
       <nav className="flex flex-1 justify-between">
-        <div />
-
         <div className="flex gap-4 sm:gap-6">
           {isLoading && (
             <>
@@ -47,6 +68,29 @@ export function SiteHeader() {
 
           {data && data.userId !== null && <UserButtons userData={data} />}
         </div>
+      </nav>
+      <nav>
+        <ul className="ml-auto flex gap-2">
+          <li>
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/about">About</Link>
+            </Button>
+          </li>
+          <li className="relative">
+            <span
+              className="absolute inset-y-0 left-0 w-0.5 bg-gray-300"
+              aria-hidden="true"
+            ></span>
+            <Button className="ml-2" asChild variant="ghost" size="sm">
+              <Link href="/sign-up">Sign up</Link>
+            </Button>
+          </li>
+          <li>
+            <Button asChild variant="ghost" size="sm">
+              <Link href="/login">Log in</Link>
+            </Button>
+          </li>
+        </ul>
       </nav>
     </header>
   );
