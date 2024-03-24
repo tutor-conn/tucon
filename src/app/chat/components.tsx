@@ -60,7 +60,7 @@ function DesktopChat(props: DesktopChatProps) {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80}>
-          <ChatSection />
+          <ChatSection selectedChat={props.selectedChat} />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
@@ -80,7 +80,7 @@ function MobileChat(props: MobileChatProps) {
       <div className="absolute h-full w-full">
         <ScrollArea className="h-full">
           {isChatOpen ? (
-            <ChatSection />
+            <ChatSection selectedChat={props.selectedChat} />
           ) : (
             <ChatSidebar
               selectedChat={props.selectedChat}

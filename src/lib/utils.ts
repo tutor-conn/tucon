@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
+import { format, isSameDay } from "date-fns";
 
 export function getSiteUrl() {
   if (process.env.NODE_ENV === "development") {
@@ -33,6 +34,24 @@ export function formatPhoneNumber(phone: string): string {
   }
 
   return formattedPhone;
+}
+
+export function formatRelativeDate(dateString: string) {
+  const today = new Date();
+  const date = new Date(dateString);
+
+  // Return the formatted time if the date is today
+  if (isSameDay(today, date)) {
+    // Format as '1:00 PM' ('p' = long localized time)
+    return format(date, "p");
+  }
+
+  // Format as '3/31/2024 1:00 PM' ('P' = long localized date)
+  return format(date, "P p");
+}
+
+export function formatDate(date: string) {
+  return format(date, "PPpp");
 }
 
 // source: https://gist.github.com/bennettdams/463c804fcfde0eaa888eaa4851c668a1

@@ -32,8 +32,46 @@ function me(
   return apiRequest("/me", { method: "GET", ...options });
 }
 
-function logout(): Promise<unknown> {
-  return apiRequest("/logout", { method: "POST" });
+function logout(options?: RequestOptions): Promise<unknown> {
+  return apiRequest("/logout", { method: "POST", ...options });
+}
+
+interface Chat {
+  id: number;
+  name: string;
+  avatarUrl: string;
+  timestamp: string;
+}
+
+function getChats(options?: RequestOptions): Promise<Chat[]> {
+  return apiRequest("/chats", { method: "GET", ...options });
+}
+
+export interface ChatMessage {
+  id: number;
+  content: string;
+  from: "me" | "them";
+  timestamp: string;
+}
+
+function getChatMessages(
+  recipientId: string | number,
+  options?: RequestOptions,
+): Promise<ChatMessage[]> {
+  return apiRequest(`/chats/${recipientId}/messages`, {
+    method: "GET",
+    ...options,
+  });
+}
+
+function sendChatMessage(
+  recipientId: string | number,
+  options: RequestOptionsBodyRequired,
+): Promise<unknown> {
+  return apiRequest(`/chats/${recipientId}/messages`, {
+    method: "POST",
+    ...options,
+  });
 }
 
 export const tuconApi = {
@@ -41,4 +79,7 @@ export const tuconApi = {
   login,
   logout,
   me,
+  getChats,
+  getChatMessages,
+  sendChatMessage,
 };
