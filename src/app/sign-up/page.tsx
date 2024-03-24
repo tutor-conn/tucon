@@ -16,11 +16,17 @@ import {
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
 import { useRouter } from "next/navigation";
+import { tuconApi } from "@/lib/api";
+import { showErrorToast } from "@/lib/utils";
 
 const formSchema = z.object({
-  name: z.string().min(1, "Please enter your name"),
-  email: z.string().email("Please enter a valid email"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  firstName: z.string().min(1, "Please enter your first name").max(64),
+  lastName: z.string().min(1, "Please enter your last name").max(64),
+  email: z.string().email("Please enter a valid email").max(128),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(128),
 });
 
 export default function SignUp() {
@@ -29,18 +35,18 @@ export default function SignUp() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    // TODO: Call API
-
-    console.log(data);
-
-    router.push("/create-profile");
+    await tuconApi
+      .register({ body: data })
+      .then(() => router.push("/create-profile"))
+      .catch(showErrorToast);
   }
 
   return (
@@ -54,10 +60,24 @@ export default function SignUp() {
             <div className="space-y-2">
               <FormField
                 control={form.control}
-                name="name"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>First name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

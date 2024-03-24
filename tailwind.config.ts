@@ -78,7 +78,30 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"), 
-    nextui(),
+    nextui({
+      themes: {
+        light: {
+          layout: {
+            radius: {
+              small: "2px", // rounded-small
+              medium: "4px", // rounded-medium
+              large: "6px", // rounded-large
+            },
+            borderWidth: {
+              small: "2px", // border-small
+              medium: "2px", // border-medium
+              large: "3px", // border-large
+            },
+          },
+          colors: {
+            default: {
+              100: "white",
+              200: "white",
+            },
+          },
+        }
+      }
+    }),
   ],
 } satisfies Config
 

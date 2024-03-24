@@ -13,9 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
 import { AuthBox } from "@/components/auth-box";
 import { Anchor } from "@/components/ui/anchor";
+import { tuconApi } from "@/lib/api";
+import { showErrorToast } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -23,6 +26,9 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,12 +38,13 @@ export default function Login() {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
-
-    // TODO: Call API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    toast.error("Not implemented!");
+    await tuconApi
+      .login({ body: data })
+      .then(() => {
+        queryClient.removeQueries({ queryKey: ["me"] });
+        router.push("/");
+      })
+      .catch(showErrorToast);
   }
 
   return (
