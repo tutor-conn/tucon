@@ -20,7 +20,7 @@ export function SiteHeader() {
     : null;
 
   return (
-    <header className="flex h-14 items-center bg-background justify-between pt-4 px-6 md:px-16 lg:px-24">
+    <header className="flex h-14 items-center justify-between bg-background px-6 pt-4 md:px-16 lg:px-24">
       <Link href={lastViewRoute ?? "/"}>
         <Image
           alt="Tucon Logo"
@@ -33,14 +33,17 @@ export function SiteHeader() {
       </Link>
       <span className="sr-only">Tucon</span>
       <nav>
-        <ul className="flex ml-auto gap-2">
+        <ul className="ml-auto flex gap-2">
           <li>
             <Button asChild variant="ghost" size="sm">
               <Link href="/about">About</Link>
             </Button>
           </li>
           <li className="relative">
-            <span className="absolute inset-y-0 left-0 w-0.5 bg-gray-300" aria-hidden="true"></span>
+            <span
+              className="absolute inset-y-0 left-0 w-0.5 bg-gray-300"
+              aria-hidden="true"
+            ></span>
             <Button className="ml-2" asChild variant="ghost" size="sm">
               <Link href="/sign-up">Sign up</Link>
             </Button>
@@ -67,14 +70,17 @@ export function SiteHeader() {
         </div>
       </nav>
       <nav>
-        <ul className="flex ml-auto gap-2">
+        <ul className="ml-auto flex gap-2">
           <li>
             <Button asChild variant="ghost" size="sm">
               <Link href="/about">About</Link>
             </Button>
           </li>
           <li className="relative">
-            <span className="absolute inset-y-0 left-0 w-0.5 bg-gray-300" aria-hidden="true"></span>
+            <span
+              className="absolute inset-y-0 left-0 w-0.5 bg-gray-300"
+              aria-hidden="true"
+            ></span>
             <Button className="ml-2" asChild variant="ghost" size="sm">
               <Link href="/sign-up">Sign up</Link>
             </Button>
