@@ -12,19 +12,19 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  if (!cookies().has("__session")) {
-    return <Home />;
-  }
+  // if (!cookies().has("__session")) {
+  //   return <Home />;
+  // }
 
-  const data = await tuconApi.me({ headers: headers() });
-
-  const redirectRoute = data.lastView
-    ? getRouteFromUserLastView(data.lastView)
-    : null;
-
-  if (redirectRoute) {
-    redirect(redirectRoute, RedirectType.replace);
-  }
+  // const data = await tuconApi.me({ headers: headers() });
+  //
+  // const redirectRoute = data.lastView
+  //   ? getRouteFromUserLastView(data.lastView)
+  //   : null;
+  //
+  // if (redirectRoute) {
+  //   redirect(redirectRoute, RedirectType.replace);
+  // }
 
   return <Home />;
 }
