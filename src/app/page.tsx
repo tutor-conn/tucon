@@ -12,24 +12,17 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  console.log("HomePage 1");
-  console.log("HomePage header", headers());
-  console.log("HomePage cookies", cookies());
+  if (!cookies().has("__session")) {
+    return <Home />;
+  }
 
   const data = await tuconApi.me({ headers: headers() });
 
-  console.log("HomePage 3", data);
-
   const redirectRoute = data.home ? getHomeRouteFromUserHome(data.home) : null;
 
-  console.log("HomePage 4", redirectRoute);
-
   if (redirectRoute) {
-    console.log("HomePage 5");
     redirect(redirectRoute, RedirectType.replace);
   }
-
-  console.log("HomePage 6");
 
   return <Home />;
 }
