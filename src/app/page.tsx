@@ -13,7 +13,8 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   console.log("HomePage 1");
-  console.log("HomePage 2 (removed cookies)");
+  console.log("HomePage header", headers());
+  console.log("HomePage cookies", cookies());
 
   const data = await tuconApi.me({ headers: headers() });
 
