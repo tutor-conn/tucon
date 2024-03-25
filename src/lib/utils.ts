@@ -11,6 +11,7 @@ export function getSiteUrl() {
   }
   // This variable is set to something like '71d0215a.tucon.pages.dev' in preview
   if (process.env.NEXT_PUBLIC_CF_PAGES_URL) {
+    console.log("CF_PAGES_URL", process.env.NEXT_PUBLIC_CF_PAGES_URL);
     return `https://${process.env.NEXT_PUBLIC_CF_PAGES_URL}`;
   }
   // Default to localhost
