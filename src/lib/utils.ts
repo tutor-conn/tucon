@@ -5,11 +5,16 @@ import { z } from "zod";
 import { format, isSameDay } from "date-fns";
 
 export function getSiteUrl() {
-  if (process.env.NODE_ENV === "development") {
-    return "http://localhost:3000";
+  // This variable is set to 'https://tucon.ca' in production
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
   }
-
-  return `https://tucon.ca`;
+  // This variable is set to something like 'https://71d0215a.tucon.pages.dev' in preview
+  if (process.env.NEXT_PUBLIC_CF_PAGES_URL) {
+    return process.env.NEXT_PUBLIC_CF_PAGES_URL;
+  }
+  // Default to localhost
+  return "http://localhost:3000";
 }
 
 export function cn(...inputs: ClassValue[]) {

@@ -56,10 +56,13 @@ export interface RequestOptionsBodyRequired extends RequestOptions {
 export async function apiRequest(endpoint: string, options: RequestOptions) {
   const { body, ...otherOptions } = options;
 
-  const requestInit: RequestInit = {
-    credentials: "include",
-    ...otherOptions,
-  };
+  const requestInit: RequestInit = { ...otherOptions };
+
+  // NOTE: Cloudflare Workers do not support 'credentials' option
+  // See https://github.com/cloudflare/workers-sdk/issues/2514
+  if (typeof window !== "undefined") {
+    requestInit.credentials = "include";
+  }
 
   if (body) {
     requestInit.headers = {
