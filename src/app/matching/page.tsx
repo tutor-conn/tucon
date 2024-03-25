@@ -70,8 +70,6 @@ export default function MatchingPage() {
       toast.success(
         "You accepted this tutor. They have been notified, please be patient for a response.",
       );
-    } else {
-      toast.error("You declined this tutor.");
     }
     // Move to the next tutor
     setTutorCount((prevCount) => prevCount + 1);
