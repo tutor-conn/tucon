@@ -58,8 +58,8 @@ export async function apiRequest(endpoint: string, options: RequestOptions) {
 
   const requestInit: RequestInit = { ...otherOptions };
 
-  // Cloudflare Workers do not support credentials
-  // See https://developers.cloudflare.com/workers/runtime/apis/fetch#requestinitcredentials
+  // NOTE: Cloudflare Workers do not support 'credentials' option
+  // See https://github.com/cloudflare/workers-sdk/issues/2514
   if (typeof window !== "undefined") {
     requestInit.credentials = "include";
   }
