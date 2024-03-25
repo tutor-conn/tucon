@@ -13,12 +13,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   console.log("HomePage 1");
-
-  if (!cookies().has("__session")) {
-    return <Home />;
-  }
-
-  console.log("HomePage 2", cookies().get("__session"));
+  console.log("HomePage 2 (removed cookies)");
 
   const data = await tuconApi.me({ headers: headers() });
 
