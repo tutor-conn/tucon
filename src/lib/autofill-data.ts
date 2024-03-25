@@ -25,7 +25,7 @@ export const courses = [
   { label: "ECON*1050", key: "econ1050" },
   { label: "FIN*2000", key: "fin2000" },
   { label: "MATH*2130", key: "math2130" },
-  { label: "CIS*2430 (Judi 🤮)", key: "cis2430" },
+  // { label: "CIS*2430 (Judi 🤮)", key: "cis2430" },
 ];
 
 export const languages = [
@@ -37,5 +37,5 @@ export const languages = [
   { label: "Afrikaans", key: "afrikaans" },
   { label: "日本語", key: "japanese" },
   { label: "हिंदी", key: "hindi" },
-  { label: "None lol", key: "none" },
+  // { label: "None lol", key: "none" },
 ];

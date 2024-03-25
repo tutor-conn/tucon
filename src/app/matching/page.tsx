@@ -67,7 +67,7 @@ export default function MatchingPage() {
   // Function to handle button click
   function handleButtonClick(choice: string) {
     if (choice === "✓") {
-      toast.error(
+      toast.success(
         "You accepted this tutor. They have been notified, please be patient for a response.",
       );
     } else {

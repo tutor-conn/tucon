@@ -19,6 +19,7 @@ import { tuconApi } from "@/lib/api";
 import { showErrorToast } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -45,6 +46,11 @@ export default function Login() {
         router.push("/");
       })
       .catch(showErrorToast);
+  }
+
+  function tempToastError(e: any) {
+    e.preventDefault();
+    toast.error("Not Implemented!");
   }
 
   return (
@@ -85,7 +91,12 @@ export default function Login() {
             </div>
 
             <div className="flex justify-between">
-              <Anchor variant="primary" href="/forgot-password">
+              {/* TODO: create forgot password page href="/forgot-password" */}
+              <Anchor
+                variant="primary"
+                href="/forgot-password"
+                onClick={tempToastError}
+              >
                 Forgot password?
               </Anchor>
               <Anchor variant="primary" href="/sign-up">

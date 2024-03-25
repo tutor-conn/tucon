@@ -37,8 +37,8 @@ import { tuconApi } from "@/lib/api";
 const phoneRegex = new RegExp(/(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
 
 const formSchema = z.object({
-  firstName: z.string().min(1, "Please enter your first name"),
-  lastName: z.string().min(1, "Please enter your last name"),
+  // firstName: z.string().min(1, "Please enter your first name"),
+  // lastName: z.string().min(1, "Please enter your last name"),
   phone: z
     .string()
     .optional()
@@ -78,8 +78,8 @@ export default function CreateStudent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      // firstName: "",
+      // lastName: "",
       phone: "",
       gender: "",
       additionalEmail: "",
@@ -160,7 +160,7 @@ export default function CreateStudent() {
                         className="row-span-3 w-[95%]"
                       />
 
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name="firstName"
                         render={({ field }) => (
@@ -186,7 +186,7 @@ export default function CreateStudent() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
 
                       <FormField
                         control={form.control}
