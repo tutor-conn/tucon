@@ -1,4 +1,3 @@
-import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Page, PageHeader, PageTitle } from "@/components/ui/page";
@@ -16,7 +15,6 @@ export default function SelectProfileType() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-gray-100">
-      <SiteHeader />
       <Page className="max-w-4xl">
         <PageHeader>
           <PageTitle>Create a Profile</PageTitle>
